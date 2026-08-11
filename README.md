@@ -1,3 +1,14 @@
+---
+AIGC:
+  ContentProducer: '001191110102MAD55U9H0F10002'
+  ContentPropagator: '001191110102MAD55U9H0F10002'
+  Label: '1'
+  ProduceID: '64878e67-19cd-42bf-889d-0b93dcd8e9ad'
+  PropagateID: '64878e67-19cd-42bf-889d-0b93dcd8e9ad'
+  ReservedCode1: '1a103375-f916-4e2e-af97-7a7b597a1034'
+  ReservedCode2: '1a103375-f916-4e2e-af97-7a7b597a1034'
+---
+
 # 2FAuth Worker
 
 [English](README_EN.md) | 中文
@@ -13,7 +24,7 @@
 [**点击此处查看 Demo 演示**](https://2fa.nezha.pp.ua)
 
 > 💡 **提示**：演示站开启了全员登录模式，数据可随意修改、删除。正式部署请务必设置白名单。
- 
+
 ---
 
 ## 🌟 为什么选择 2FAuth Worker？
@@ -90,9 +101,10 @@
   *   `ENCRYPTION_KEY`：32位以上随机密钥。
   *   `JWT_SECRET`：32位以上随机JWT密钥。
   *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
-  *   `OAUTH_GITHUB_CLIENT_ID`：你的CLIENT_ID
-  *   `OAUTH_GITHUB_CLIENT_SECRET`：你的CLIENT_SECRET
-  *   `OAUTH_GITHUB_REDIRECT_URI`：你的回调地址
+  *   登录方式（至少选一种）：
+      *   账号密码登录：`AUTH_USERNAME`（用户名）+ `AUTH_PASSWORD`（密码）
+      *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+      *   其他 OAuth 平台见下方说明
 
 <details>
 <summary>点击查看：添加变量和机密示意图</summary>
@@ -131,10 +143,14 @@ services:
       - ENCRYPTION_KEY=32位以上随机密钥
       - JWT_SECRET=32位以上随机JWT密钥
       - OAUTH_ALLOWED_USERS=你的邮箱@example.com
-      # 至少配置一种登录方式 (以 GitHub 为例)
-      - OAUTH_GITHUB_CLIENT_ID=你的ID
-      - OAUTH_GITHUB_CLIENT_SECRET=你的Secret
-      - OAUTH_GITHUB_REDIRECT_URI=https://你的域名/oauth/callback
+      # 登录方式（至少选一种）
+      # 方式一：账号密码登录（最简单，无需第三方平台）
+      - AUTH_USERNAME=admin
+      - AUTH_PASSWORD=YourStrongPassword123
+      # 方式二：GitHub OAuth
+      #- OAUTH_GITHUB_CLIENT_ID=你的ID
+      #- OAUTH_GITHUB_CLIENT_SECRET=你的Secret
+      #- OAUTH_GITHUB_REDIRECT_URI=https://你的域名/oauth/callback
       - LOG_LEVEL=info
     restart: unless-stopped
 ```
@@ -148,9 +164,14 @@ docker run -d --name 2fauth-worker \
   -e ENCRYPTION_KEY=32位以上随机密钥 \
   -e JWT_SECRET=32位以上随机JWT密钥 \
   -e OAUTH_ALLOWED_USERS=你的邮箱 \
-  -e OAUTH_GITHUB_CLIENT_ID= \
-  -e OAUTH_GITHUB_CLIENT_SECRET= \
-  -e OAUTH_GITHUB_REDIRECT_URI=https://你的域名/oauth/callback \
+  # 登录方式（至少选一种）：
+  # 方式一：账号密码登录（最简单）
+  -e AUTH_USERNAME=admin \
+  -e AUTH_PASSWORD=YourStrongPassword123 \
+  # 方式二：GitHub OAuth
+  #-e OAUTH_GITHUB_CLIENT_ID= \
+  #-e OAUTH_GITHUB_CLIENT_SECRET= \
+  #-e OAUTH_GITHUB_REDIRECT_URI=https://你的域名/oauth/callback \
   -e LOG_LEVEL=info \
   nap0o/2fauth-worker:latest
 ```
@@ -199,9 +220,9 @@ docker run -d --name 2fauth-worker \
   *   `ENCRYPTION_KEY`：32位以上随机密钥。
   *   `JWT_SECRET`：32位以上随机JWT密钥。
   *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
-  *   `OAUTH_GITHUB_CLIENT_ID`：你的ID
-  *   `OAUTH_GITHUB_CLIENT_SECRET`：你的Secret
-  *   `OAUTH_GITHUB_REDIRECT_URI`：你的回调地址
+  *   登录方式（至少选一种）：
+      *   账号密码登录：`AUTH_USERNAME` + `AUTH_PASSWORD`
+      *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
 <details>
 <summary>点击查看：Secrets 配置示例图</summary>  
@@ -227,9 +248,13 @@ docker run -d --name 2fauth-worker \
 | `ENCRYPTION_KEY` | **核心：** 数据库加密密钥 | 设好后**绝对不要改**！改了旧数据就解不开了。要求：32 位以上随机字符。 |
 | `JWT_SECRET` | 登录状态密钥 | 要求：32 位以上随机字符。 |
 | `OAUTH_ALLOWED_USERS` | **白名单：** 只有谁能进 | 填你的邮箱或 Telegram 数字 ID，多个用逗号隔开。 |
+| `AUTH_USERNAME` | **密码登录：** 用户名 | 与 `AUTH_PASSWORD` 配合使用，无需第三方 OAuth 平台即可登录。 |
+| `AUTH_PASSWORD` | **密码登录：** 密码 | 与 `AUTH_USERNAME` 配合使用。 |
 
 
 ### 依据你选取的登录平台，在环境变量中填入对应参数（任选其一即可）：
+
+> 💡 **最简方案**：只需配置 `AUTH_USERNAME` + `AUTH_PASSWORD` 即可实现账号密码登录，无需任何第三方平台。密码登录和 OAuth 可同时启用。
 
 | 平台 | Client ID 变量名 | Client Secret 变量名 | Redirect URI 回调变量名 (示例: `https://xxx.dev/oauth/callback`) |
 | :--- | :--- | :--- | :--- |
@@ -332,3 +357,5 @@ npm run dev
 
 ## 📄 开源协议
 本项目基于 [GNU AGPL v3](LICENSE) 协议开源。作为一款涉及 2FA 安全与网络服务的软件，我们坚持维护开源社区的公平性：如果您在服务器上运行本项目的修改版本并向公众提供服务，您必须向用户开放您的源代码。
+
+> AI生成

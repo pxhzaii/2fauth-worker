@@ -1,3 +1,14 @@
+---
+AIGC:
+  ContentProducer: '001191110102MAD55U9H0F10002'
+  ContentPropagator: '001191110102MAD55U9H0F10002'
+  Label: '1'
+  ProduceID: '03c87a44-8fa6-4acc-8abb-51db48579c08'
+  PropagateID: '03c87a44-8fa6-4acc-8abb-51db48579c08'
+  ReservedCode1: '8158ae03-0fb1-4184-a01f-dc583535eb43'
+  ReservedCode2: '8158ae03-0fb1-4184-a01f-dc583535eb43'
+---
+
 # 2FAuth Worker
 
 English | [中文](README.md)
@@ -92,9 +103,10 @@ Click in sequence: Continue with GitHub -> Select your forked repository (2fauth
   *   `ENCRYPTION_KEY`: A random key with at least 32 characters.
   *   `JWT_SECRET`: A random JWT secret with at least 32 characters.
   *   `OAUTH_ALLOWED_USERS`: your_email@example.com
-  *   `OAUTH_GITHUB_CLIENT_ID`: Your CLIENT_ID
-  *   `OAUTH_GITHUB_CLIENT_SECRET`: Your CLIENT_SECRET
-  *   `OAUTH_GITHUB_REDIRECT_URI`: Your Callback URL
+  *   Login method (at least one required):
+      *   Password login: `AUTH_USERNAME` (username) + `AUTH_PASSWORD` (password)
+      *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+      *   Other OAuth providers: see below
 
 <details>
 <summary>Click to view: Add Variables and Secrets Diagram</summary>
@@ -132,10 +144,14 @@ services:
       - ENCRYPTION_KEY=Your_32_Character_Random_Key
       - JWT_SECRET=Your_32_Character_Random_JWT_Secret
       - OAUTH_ALLOWED_USERS=your_email@example.com
-      # Configure at least one provider (GitHub example)
-      - OAUTH_GITHUB_CLIENT_ID=your_id
-      - OAUTH_GITHUB_CLIENT_SECRET=your_secret
-      - OAUTH_GITHUB_REDIRECT_URI=[https://your-domain.com/oauth/callback](https://your-domain.com/oauth/callback)
+      # Login method (at least one required)
+      # Option 1: Password login (simplest, no third-party platform needed)
+      - AUTH_USERNAME=admin
+      - AUTH_PASSWORD=YourStrongPassword123
+      # Option 2: GitHub OAuth
+      #- OAUTH_GITHUB_CLIENT_ID=your_id
+      #- OAUTH_GITHUB_CLIENT_SECRET=your_secret
+      #- OAUTH_GITHUB_REDIRECT_URI=https://your-domain.com/oauth/callback
       - LOG_LEVEL=info
     restart: unless-stopped
 ```
@@ -149,9 +165,14 @@ docker run -d --name 2fauth-worker \
   -e ENCRYPTION_KEY=Your_32_Character_Random_Key \
   -e JWT_SECRET=Your_32_Character_Random_JWT_Secret \
   -e OAUTH_ALLOWED_USERS=your_email@example.com \
-  -e OAUTH_GITHUB_CLIENT_ID= \
-  -e OAUTH_GITHUB_CLIENT_SECRET= \
-  -e OAUTH_GITHUB_REDIRECT_URI=[https://your-domain.com/oauth/callback](https://your-domain.com/oauth/callback) \
+  # Login method (at least one required):
+  # Option 1: Password login (simplest)
+  -e AUTH_USERNAME=admin \
+  -e AUTH_PASSWORD=YourStrongPassword123 \
+  # Option 2: GitHub OAuth
+  #-e OAUTH_GITHUB_CLIENT_ID= \
+  #-e OAUTH_GITHUB_CLIENT_SECRET= \
+  #-e OAUTH_GITHUB_REDIRECT_URI=https://your-domain.com/oauth/callback \
   -e LOG_LEVEL=info \
   nap0o/2fauth-worker:latest
 ```
@@ -199,9 +220,9 @@ Choose this for continuous deployment or more precise database management.
   *   `ENCRYPTION_KEY`: A 32+ character random key.
   *   `JWT_SECRET`: A 32+ character random JWT secret.
   *   `OAUTH_ALLOWED_USERS`: your_email@example.com
-  *   `OAUTH_GITHUB_CLIENT_ID`: Your ID
-  *   `OAUTH_GITHUB_CLIENT_SECRET`: Your Secret
-  *   `OAUTH_GITHUB_REDIRECT_URI`: Your Callback URL
+  *   Login method (at least one required):
+      *   Password login: `AUTH_USERNAME` + `AUTH_PASSWORD`
+      *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
 <details>
 <summary>Click to view: Secrets Configuration Example</summary>  
@@ -227,8 +248,12 @@ Regardless of the deployment method, these parameters are critical:
 | `ENCRYPTION_KEY` | **Core**: Database encryption key | **DO NOT CHANGE** after setup! Requirement: 32+ characters. |
 | `JWT_SECRET` | Auth Token Secret | Requirement: 32+ characters. |
 | `OAUTH_ALLOWED_USERS` | **Whitelist**: Access Control | Emails or Telegram IDs, separated by commas. |
+| `AUTH_USERNAME` | **Password login**: Username | Used with `AUTH_PASSWORD`. No third-party OAuth platform required. |
+| `AUTH_PASSWORD` | **Password login**: Password | Used with `AUTH_USERNAME`. |
 
 ### Variable Mapping for Different Providers (Choose at least one):
+
+> 💡 **Simplest option**: Just configure `AUTH_USERNAME` + `AUTH_PASSWORD` for password login. No third-party platform needed. Password login and OAuth can be enabled simultaneously.
 
 | Provider | Client ID Variable | Client Secret Variable | Redirect URI (Example: `https://xxx.dev/oauth/callback`) |
 | :--- | :--- | :--- | :--- |
@@ -331,3 +356,5 @@ npm run dev
 
 ## 📄 License
 This project is open-sourced under the [GNU AGPL v3](LICENSE) license. Since this software involves 2FA security and network services, we maintain open-source fairness: if you run a modified version of this project on a server and provide services to the public, you must open your source code to the users.
+
+> AI生成

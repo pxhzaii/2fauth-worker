@@ -1,0 +1,111 @@
+/* TheHeader.vue */
+.header {
+    background: var(--el-bg-color);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    flex-shrink: 0;
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid var(--el-border-color-light);
+}
+
+.logo,
+.user-actions,
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.logo h2 {
+    margin: 0;
+    color: var(--el-text-color-primary);
+    font-size: 20px;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.guest-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-action-btn.el-button.is-circle {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background: var(--el-bg-color);
+    border: 1px solid var(--el-border-color-lighter);
+    color: var(--el-text-color-regular);
+}
+
+.header-action-btn.el-button.is-circle:hover {
+    color: var(--el-color-primary);
+    border-color: var(--el-color-primary-light-5);
+    background-color: var(--el-color-primary-light-9);
+}
+
+.user-profile {
+    gap: 10px;
+    background: var(--el-fill-color-light);
+    padding: 4px 15px 4px 4px;
+    border-radius: 20px;
+}
+
+.username {
+    font-weight: 600;
+    color: var(--el-text-color-regular);
+    font-size: 14px;
+}
+
+.menu-icon {
+    color: var(--el-text-color-regular);
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 15px;
+    }
+
+    .logo h2 {
+        font-size: 18px;
+    }
+
+    .guest-actions {
+        gap: 0px;
+    }
+}
+
+/* --- TheHeader Button & Link --- */
+.header-menu-btn-refined {
+    padding: 8px !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--el-text-color-primary) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px !important;
+    height: auto !important;
+}
+
+.header-menu-btn-refined:hover {
+    background: var(--el-fill-color-light) !important;
+}
+
+.header-menu-btn-refined:active {
+    transform: scale(0.9) rotate(-5deg);
+    background: var(--el-fill-color) !important;
+}
+
+.header-home-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}

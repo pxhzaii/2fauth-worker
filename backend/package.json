@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --config ../wrangler.dev.toml --ip 0.0.0.0 --port 8787 --test-scheduled",
+    "deploy": "wrangler deploy --minify ./src/app/worker.ts",
+    "build:docker": "esbuild ./src/app/server.ts --bundle --platform=node --external:better-sqlite3 --external:nodemailer --external:cloudflare:sockets --outfile=dist/server.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.11",
+    "@simplewebauthn/server": "^13.3.0",
+    "aws4fetch": "^1.0.20",
+    "better-sqlite3": "^12.6.2",
+    "drizzle-orm": "^0.30.10",
+    "hono": "^4.12.3",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^7.0.11",
+    "webdav": "^5.9.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260226.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.3.5",
+    "@types/node-cron": "^3.0.11",
+    "@types/nodemailer": "^7.0.11",
+    "drizzle-kit": "^0.31.9",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.71.0"
+  },
+  "overrides": {
+    "esbuild": ">=0.25.0"
+  }
+}

@@ -1,0 +1,79 @@
+/* =========================================
+   0. 强制同步修复 (Force Sync)
+   ========================================= */
+/* 核心修复：强制禁用所有元素的过渡动画，确保深浅色切换瞬间完成，消除不同步感 */
+*,
+*::before,
+*::after {
+    transition: none !important;
+}
+
+/* =========================================
+   1. 全局基础样式 (Global Reset & Base)
+   ========================================= */
+html,
+body,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--el-bg-color-page);
+    color: var(--el-text-color-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 移动端特殊适配：释放根部滚动以支持原生下拉刷新 */
+@media (max-width: 768px) {
+
+    html,
+    body,
+    #app {
+        height: auto;
+        min-height: 100%;
+        overflow: visible;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #409EFF;
+}
+
+/* 滚动条优化 */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--el-border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--el-text-color-secondary);
+}
+
+/* 通用组件样式 */
+.tab-card-wrapper {
+    background: var(--el-bg-color);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+    min-height: 400px;
+}
+
+@media (max-width: 768px) {
+    .tab-card-wrapper {
+        background: none;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 0;
+    }
+}

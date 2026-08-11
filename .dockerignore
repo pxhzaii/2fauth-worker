@@ -1,0 +1,53 @@
+# Dependencies & Artifacts
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dev-dist/
+**/dev-dist/
+.vite/
+**/.vite/
+.wrangler/
+**/.wrangler/
+
+# Local Data & State
+data/
+*.db*
+*.db-journal
+*.db-shm
+*.db-wal
+.event
+.test/
+.gemini/
+.agent/
+.agents/
+.act/
+.actrc
+
+# Environment & Secrets
+.secrets
+.secrets*
+.dev.vars
+example.dev.vars
+wrangler.dev.toml
+wrangler.demo.toml
+
+# System & IDE files
+.DS_Store
+.vscode/
+.devcontainer/
+.idea/
+.gitignore
+.dockerignore
+
+# Build-specific files
+Dockerfile
+docker-compose.yml
+
+# Documentation
+README.md
+LICENSE
+
+# Git
+.git/
+.github/

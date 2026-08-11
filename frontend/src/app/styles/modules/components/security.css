@@ -1,0 +1,25 @@
+.security-wrapper .tab-card-wrapper {
+    padding-bottom: 40px;
+}
+
+.security-wrapper .empty-state {
+    padding: 60px 0;
+}
+
+.security-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.security-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.security-header-actions h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}

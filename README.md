@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '0cf96516-9016-436c-ab3a-24335d587d78'
-  PropagateID: '0cf96516-9016-436c-ab3a-24335d587d78'
-  ReservedCode1: '4f0b0052-77de-40d2-b018-1858970c6ef0'
-  ReservedCode2: '4f0b0052-77de-40d2-b018-1858970c6ef0'
+  ProduceID: 'a734e6b1-c927-4a03-b88f-165b1f53186e'
+  PropagateID: 'a734e6b1-c927-4a03-b88f-165b1f53186e'
+  ReservedCode1: 'fefc39b2-3477-4ded-a9d7-b5daf17ce043'
+  ReservedCode2: 'fefc39b2-3477-4ded-a9d7-b5daf17ce043'
 ---
 
 # 2FAuth Worker
@@ -99,13 +99,16 @@ AIGC:
 7. 点击 **保存并部署** 使绑定生效
 
 #### 4. 在`设置`添加如下变量和机密
-*   `ENCRYPTION_KEY`：32位以上随机密钥（建议类型：机密）
-*   `JWT_SECRET`：32位以上随机JWT密钥（建议类型：机密）
-*   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com（建议类型：文本）
-*   登录方式（至少选一种）：
-    *   账号密码登录：`AUTH_USERNAME`（用户名）+ `AUTH_PASSWORD`（密码），建议类型：机密
-    *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
-    *   其他 OAuth 平台见下方说明
+
+| 变量名 | 说明 | 建议类型 |
+| :--- | :--- | :--- |
+| `ENCRYPTION_KEY` | 32位以上随机密钥 | 机密 |
+| `JWT_SECRET` | 32位以上随机JWT密钥 | 机密 |
+| `OAUTH_ALLOWED_USERS` | 你的邮箱@example.com | 文本 |
+| `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） | 机密 |
+| `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） | 机密 |
+
+> 密码登录和 OAuth 可同时启用，至少选一种登录方式。其他 OAuth 平台变量见下方说明。
 
 添加方式：进入 Workers & Pages → 选择你的 `2fauth-worker` 项目 → **设置** → **变量和机密** → **添加**，选择类型为 **机密**（Secret）或 **文本**（Text），依次添加上方列出的变量，添加完成后点击 **保存并部署** 使变量生效。
 
@@ -203,16 +206,23 @@ docker run -d --name 2fauth-worker \
 2.  创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表（详见上方 [D1 数据库配置](#d1-数据库配置)）。
 3.  前往仓库的 `Settings` -> `Secrets and variables` -> `Actions`。
 4.  添加如下 Secrets：
-    *   `CLOUDFLARE_ACCOUNT_ID`：你的 CF 账户 ID
-    *   `CLOUDFLARE_API_TOKEN`：刚刚生成的 API 令牌
-    *   `CLOUDFLARE_D1_DATABASE_ID`：D1 数据库的 ID
-    *   `CLOUDFLARE_D1_DATABASE_NAME`：D1 数据库的名称
-    *   `ENCRYPTION_KEY`：32位以上随机密钥
-    *   `JWT_SECRET`：32位以上随机JWT密钥
-    *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
-    *   登录方式（至少选一种）：
-        *   账号密码登录：`AUTH_USERNAME` + `AUTH_PASSWORD`
-        *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+
+    | 变量名 | 说明 |
+    | :--- | :--- |
+    | `CLOUDFLARE_ACCOUNT_ID` | 你的 CF 账户 ID |
+    | `CLOUDFLARE_API_TOKEN` | 刚刚生成的 API 令牌 |
+    | `CLOUDFLARE_D1_DATABASE_ID` | D1 数据库的 ID |
+    | `CLOUDFLARE_D1_DATABASE_NAME` | D1 数据库的名称 |
+    | `ENCRYPTION_KEY` | 32位以上随机密钥 |
+    | `JWT_SECRET` | 32位以上随机JWT密钥 |
+    | `OAUTH_ALLOWED_USERS` | 你的邮箱@example.com |
+    | `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） |
+    | `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） |
+    | `OAUTH_GITHUB_CLIENT_ID` | GitHub OAuth Client ID（如用 GitHub 登录） |
+    | `OAUTH_GITHUB_CLIENT_SECRET` | GitHub OAuth Client Secret（如用 GitHub 登录） |
+    | `OAUTH_GITHUB_REDIRECT_URI` | GitHub OAuth 回调地址（如用 GitHub 登录） |
+
+    > 密码登录和 OAuth 可同时启用，至少选一种登录方式。
 
     添加方式：进入你 Fork 的仓库页面 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`，依次添加上方列出的每个 Secret。
 

@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '7da25856-0389-4571-92c7-feed356014eb'
-  PropagateID: '7da25856-0389-4571-92c7-feed356014eb'
-  ReservedCode1: '218e3e8a-e7ba-4102-b151-d9c4bcabdd39'
-  ReservedCode2: '218e3e8a-e7ba-4102-b151-d9c4bcabdd39'
+  ProduceID: 'a6543377-6a6a-445d-a340-6ab9f32717b3'
+  PropagateID: 'a6543377-6a6a-445d-a340-6ab9f32717b3'
+  ReservedCode1: '8d256049-05b6-4715-aef0-ff0d25de79d2'
+  ReservedCode2: '8d256049-05b6-4715-aef0-ff0d25de79d2'
 ---
 
 # 2FAuth Worker
@@ -101,13 +101,16 @@ After the first deployment, you must create a D1 database and execute the schema
 7. Click **Save and Deploy** to apply the binding
 
 #### 4. Add the following Variables and Secrets in `Settings`
-*   `ENCRYPTION_KEY`: A random key with at least 32 characters (recommended type: Secret)
-*   `JWT_SECRET`: A random JWT secret with at least 32 characters (recommended type: Secret)
-*   `OAUTH_ALLOWED_USERS`: your_email@example.com (recommended type: Text)
-*   Login method (at least one required):
-    *   Password login: `AUTH_USERNAME` (username) + `AUTH_PASSWORD` (password), recommended type: Secret
-    *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
-    *   Other OAuth providers: see below
+
+| Variable | Description | Recommended Type |
+| :--- | :--- | :--- |
+| `ENCRYPTION_KEY` | A random key with at least 32 characters | Secret |
+| `JWT_SECRET` | A random JWT secret with at least 32 characters | Secret |
+| `OAUTH_ALLOWED_USERS` | your_email@example.com | Text |
+| `AUTH_USERNAME` | Password login username (used with `AUTH_PASSWORD`) | Secret |
+| `AUTH_PASSWORD` | Password login password (used with `AUTH_USERNAME`) | Secret |
+
+> Password login and OAuth can be enabled simultaneously. At least one login method is required. Other OAuth provider variables see below.
 
 How to add: Go to Workers & Pages → select your `2fauth-worker` project → **Settings** → **Variables and Secrets** → **Add**, choose type as **Secret** or **Text**, add each variable listed above. After adding, click **Save and Deploy** to apply the changes.
 
@@ -204,16 +207,23 @@ Choose this for continuous deployment or more precise database management.
 2.  Create a D1 database named `2fauth-db` and execute `backend/schema.sql` in the D1 console (see [D1 Database Setup](#d1-database-setup) above).
 3.  Go to `Settings` → `Secrets and variables` → `Actions`.
 4.  Add the following secrets:
-    *   `CLOUDFLARE_ACCOUNT_ID`: Your CF Account ID
-    *   `CLOUDFLARE_API_TOKEN`: Your API Token
-    *   `CLOUDFLARE_D1_DATABASE_ID`: Your D1 Database ID
-    *   `CLOUDFLARE_D1_DATABASE_NAME`: `2fauth-db`
-    *   `ENCRYPTION_KEY`: A 32+ character random key
-    *   `JWT_SECRET`: A 32+ character random JWT secret
-    *   `OAUTH_ALLOWED_USERS`: your_email@example.com
-    *   Login method (at least one required):
-        *   Password login: `AUTH_USERNAME` + `AUTH_PASSWORD`
-        *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+
+    | Variable | Description |
+    | :--- | :--- |
+    | `CLOUDFLARE_ACCOUNT_ID` | Your CF Account ID |
+    | `CLOUDFLARE_API_TOKEN` | Your API Token |
+    | `CLOUDFLARE_D1_DATABASE_ID` | Your D1 Database ID |
+    | `CLOUDFLARE_D1_DATABASE_NAME` | `2fauth-db` |
+    | `ENCRYPTION_KEY` | A 32+ character random key |
+    | `JWT_SECRET` | A 32+ character random JWT secret |
+    | `OAUTH_ALLOWED_USERS` | your_email@example.com |
+    | `AUTH_USERNAME` | Password login username (used with `AUTH_PASSWORD`) |
+    | `AUTH_PASSWORD` | Password login password (used with `AUTH_USERNAME`) |
+    | `OAUTH_GITHUB_CLIENT_ID` | GitHub OAuth Client ID (if using GitHub login) |
+    | `OAUTH_GITHUB_CLIENT_SECRET` | GitHub OAuth Client Secret (if using GitHub login) |
+    | `OAUTH_GITHUB_REDIRECT_URI` | GitHub OAuth callback URL (if using GitHub login) |
+
+    > Password login and OAuth can be enabled simultaneously. At least one login method is required.
 
     How to add: Go to your forked repository page → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`, add each Secret listed above.
 

@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'a6543377-6a6a-445d-a340-6ab9f32717b3'
-  PropagateID: 'a6543377-6a6a-445d-a340-6ab9f32717b3'
-  ReservedCode1: '8d256049-05b6-4715-aef0-ff0d25de79d2'
-  ReservedCode2: '8d256049-05b6-4715-aef0-ff0d25de79d2'
+  ProduceID: '99b893af-c1d7-40d8-a295-d26776101a00'
+  PropagateID: '99b893af-c1d7-40d8-a295-d26776101a00'
+  ReservedCode1: '216b518a-17ce-4513-8f07-33b99912d0cf'
+  ReservedCode2: '216b518a-17ce-4513-8f07-33b99912d0cf'
 ---
 
 # 2FAuth Worker
@@ -102,13 +102,15 @@ After the first deployment, you must create a D1 database and execute the schema
 
 #### 4. Add the following Variables and Secrets in `Settings`
 
-| Variable | Description | Recommended Type |
+> ⚠️ **Security Requirement**: Except for `OAUTH_ALLOWED_USERS`, all variables below **MUST be set as "Secret" type**. Do NOT use "Text" type, otherwise your passwords and keys will be visible in plain text in the dashboard!
+
+| Variable | Description | Required Type |
 | :--- | :--- | :--- |
-| `ENCRYPTION_KEY` | A random key with at least 32 characters | Secret |
-| `JWT_SECRET` | A random JWT secret with at least 32 characters | Secret |
+| `ENCRYPTION_KEY` | A random key with at least 32 characters | **Secret** |
+| `JWT_SECRET` | A random JWT secret with at least 32 characters | **Secret** |
 | `OAUTH_ALLOWED_USERS` | your_email@example.com | Text |
-| `AUTH_USERNAME` | Password login username (used with `AUTH_PASSWORD`) | Secret |
-| `AUTH_PASSWORD` | Password login password (used with `AUTH_USERNAME`) | Secret |
+| `AUTH_USERNAME` | Password login username (used with `AUTH_PASSWORD`) | **Secret** |
+| `AUTH_PASSWORD` | Password login password (used with `AUTH_USERNAME`) | **Secret** |
 
 > Password login and OAuth can be enabled simultaneously. At least one login method is required. Other OAuth provider variables see below.
 

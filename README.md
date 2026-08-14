@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'a734e6b1-c927-4a03-b88f-165b1f53186e'
-  PropagateID: 'a734e6b1-c927-4a03-b88f-165b1f53186e'
-  ReservedCode1: 'fefc39b2-3477-4ded-a9d7-b5daf17ce043'
-  ReservedCode2: 'fefc39b2-3477-4ded-a9d7-b5daf17ce043'
+  ProduceID: '5a221d23-cfc2-429d-9bea-5233be8c3371'
+  PropagateID: '5a221d23-cfc2-429d-9bea-5233be8c3371'
+  ReservedCode1: '16dd6457-5357-48f5-b6c5-00d3daa91218'
+  ReservedCode2: '16dd6457-5357-48f5-b6c5-00d3daa91218'
 ---
 
 # 2FAuth Worker
@@ -77,12 +77,15 @@ AIGC:
 
 > ⚠️ **注意**：部署完成后，必须手动创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表，然后将数据库绑定到 Worker 项目（绑定变量名：`DB`）。详见下方 [D1 数据库配置](#d1-数据库配置) 章节。
 
+#### 2. 授权
+在部署向导中，选择 **Connect to Git**，授权 Cloudflare 访问你的 GitHub 账号，然后选择你 Fork 后的 `2fauth-worker` 仓库。授权完成后 Cloudflare 会自动读取仓库源码。
 
 #### 3. 部署流程
-1.  Fork 本仓库
-2.  登录 Cloudflare Dashboard → Workers
-3. 构建命令填写：`npm run build --prefix frontend && npx wrangler deploy`
-4. 在设置页面添加环境变量和机密（见下一步）
+1. 点击 **Continue with GitHub**，选择你 Fork 后的仓库（`2fauth-worker`）
+2. 点击 **下一步** → **部署**，等待构建完成
+3. 部署完成后，点击 **继续处理项目** → **设置**
+4. 构建命令填写：`npm run build --prefix frontend && npx wrangler deploy`
+5. 在设置页面添加环境变量和机密（见下一步）
 
 #### D1 数据库配置
 首次部署后，必须创建 D1 数据库并执行建表脚本：
@@ -95,19 +98,21 @@ AIGC:
 6. 绑定变量名填写 `DB`，选择刚创建的 `2fauth-db` 数据库
 7. 点击 **保存并部署** 使绑定生效
 
-#### 4. 在`设置`添加如下变量和机密
+#### 4. 在`设置`添加如下变量和密钥
 
-| 变量名 | 说明 | 建议类型 |
+> ⚠️ **安全要求**：除 `OAUTH_ALLOWED_USERS` 外，其余变量**必须选择「密钥」(Secret) 类型**，切勿使用「文本」(Text)，否则密码和密钥将在后台明文可见！
+
+| 变量名 | 说明 | 必须类型 |
 | :--- | :--- | :--- |
-| `ENCRYPTION_KEY` | 32位以上随机密钥 | 机密 |
-| `JWT_SECRET` | 32位以上随机JWT密钥 | 机密 |
+| `ENCRYPTION_KEY` | 32位以上随机密钥 | **密钥** |
+| `JWT_SECRET` | 32位以上随机JWT密钥 | **密钥** |
 | `OAUTH_ALLOWED_USERS` | 你的邮箱@example.com | 文本 |
-| `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） | 机密 |
-| `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） | 机密 |
+| `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） | **密钥** |
+| `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） | **密钥** |
 
 > 密码登录和 OAuth 可同时启用，至少选一种登录方式。其他 OAuth 平台变量见下方说明。
 
-添加方式：进入 Workers & Pages → 选择你的 `2fauth-worker` 项目 → **设置** → **变量和机密** → **添加**，选择类型为 **机密**（Secret）或 **文本**（Text），依次添加上方列出的变量，添加完成后点击 **保存并部署** 使变量生效。
+添加方式：进入 Workers & Pages → 选择你的 `2fauth-worker` 项目 → **设置** → **变量和密钥** → **添加**，选择类型为 **密钥**（Secret）或 **文本**（Text），依次添加上方列出的变量，添加完成后点击 **保存并部署** 使变量生效。
 
 ---
 

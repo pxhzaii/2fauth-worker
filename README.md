@@ -77,15 +77,12 @@ AIGC:
 
 > ⚠️ **注意**：部署完成后，必须手动创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表，然后将数据库绑定到 Worker 项目（绑定变量名：`DB`）。详见下方 [D1 数据库配置](#d1-数据库配置) 章节。
 
-#### 2. 授权
-在部署向导中，选择 **Connect to Git**，授权 Cloudflare 访问你的 GitHub 账号，然后选择你 Fork 后的 `2fauth-worker` 仓库。授权完成后 Cloudflare 会自动读取仓库源码。
 
 #### 3. 部署流程
-1. 点击 **Continue with GitHub**，选择你 Fork 后的仓库（`2fauth-worker`）
-2. 点击 **下一步** → **部署**，等待构建完成
-3. 部署完成后，点击 **继续处理项目** → **设置**
-4. 构建命令填写：`npm run build --prefix frontend && npx wrangler deploy`
-5. 在设置页面添加环境变量和机密（见下一步）
+1.  Fork 本仓库
+2.  登录 Cloudflare Dashboard → Workers
+3. 构建命令填写：`npm run build --prefix frontend && npx wrangler deploy`
+4. 在设置页面添加环境变量和机密（见下一步）
 
 #### D1 数据库配置
 首次部署后，必须创建 D1 数据库并执行建表脚本：

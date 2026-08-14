@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'd4a01648-c7a0-4fc4-bf1b-6ce5f915c36d'
-  PropagateID: 'd4a01648-c7a0-4fc4-bf1b-6ce5f915c36d'
-  ReservedCode1: '284fc360-63a7-4a9e-8e21-7d47fa7c1620'
-  ReservedCode2: '284fc360-63a7-4a9e-8e21-7d47fa7c1620'
+  ProduceID: 'a0f0f184-bbb7-4b4d-b37e-2ba908e24fec'
+  PropagateID: 'a0f0f184-bbb7-4b4d-b37e-2ba908e24fec'
+  ReservedCode1: 'e5ae6727-cb39-4029-a63b-585b6cb13bc0'
+  ReservedCode2: 'e5ae6727-cb39-4029-a63b-585b6cb13bc0'
 ---
 
 # 2FAuth Worker
@@ -99,7 +99,7 @@ AIGC:
 3. 部署完成后，点击 **继续处理项目** → **设置**
 4. 在设置页面添加环境变量和机密（见下一步）
 5. 构建命令填写：`npm run build --prefix frontend`
-6. 部署命令填写：`npm run build --prefix frontend && npx wrangler deploy`
+6. 部署命令填写：`npx wrangler deploy`
 
 </details>
 

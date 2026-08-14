@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '683c6ddc-e774-44be-9765-9f0c14c70a0e'
-  PropagateID: '683c6ddc-e774-44be-9765-9f0c14c70a0e'
-  ReservedCode1: '31a4f643-8fe8-45aa-9721-38e9d6c697fb'
-  ReservedCode2: '31a4f643-8fe8-45aa-9721-38e9d6c697fb'
+  ProduceID: 'c0129dbb-4f64-456e-865c-7f9b91fef47e'
+  PropagateID: 'c0129dbb-4f64-456e-865c-7f9b91fef47e'
+  ReservedCode1: '3797d4b0-0f29-49e3-ac83-0f85a5a1e6e9'
+  ReservedCode2: '3797d4b0-0f29-49e3-ac83-0f85a5a1e6e9'
 ---
 
 # 2FAuth Worker
@@ -101,7 +101,7 @@ Click in sequence: Continue with GitHub -> Select your forked repository (2fauth
 3. After deployment, click **Continue to project** → **Settings**
 4. Add environment variables and secrets in the settings page (see next step)
 5. Build command: `npm run build --prefix frontend`
-6. Deploy command: `npm run build --prefix frontend && npx wrangler deploy`
+6. Deploy command: `npx wrangler deploy`
 
 </details>
 

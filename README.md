@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '5a221d23-cfc2-429d-9bea-5233be8c3371'
-  PropagateID: '5a221d23-cfc2-429d-9bea-5233be8c3371'
-  ReservedCode1: '16dd6457-5357-48f5-b6c5-00d3daa91218'
-  ReservedCode2: '16dd6457-5357-48f5-b6c5-00d3daa91218'
+  ProduceID: '7d5d6f21-9e8a-40e2-aa9c-77e4e76010e8'
+  PropagateID: '7d5d6f21-9e8a-40e2-aa9c-77e4e76010e8'
+  ReservedCode1: '2abee1df-b588-4755-8d83-23de6bb0abe4'
+  ReservedCode2: '2abee1df-b588-4755-8d83-23de6bb0abe4'
 ---
 
 # 2FAuth Worker
@@ -85,7 +85,7 @@ AIGC:
 2. 点击 **下一步** → **部署**，等待构建完成
 3. 部署完成后，点击 **继续处理项目** → **设置**
 4. 构建命令填写：`npm run build --prefix frontend && npx wrangler deploy`
-5. 在设置页面添加环境变量和机密（见下一步）
+5. 在设置页面添加环境变量和密钥（见下一步）
 
 #### D1 数据库配置
 首次部署后，必须创建 D1 数据库并执行建表脚本：

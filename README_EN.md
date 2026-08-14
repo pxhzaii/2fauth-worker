@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'c0129dbb-4f64-456e-865c-7f9b91fef47e'
-  PropagateID: 'c0129dbb-4f64-456e-865c-7f9b91fef47e'
-  ReservedCode1: '3797d4b0-0f29-49e3-ac83-0f85a5a1e6e9'
-  ReservedCode2: '3797d4b0-0f29-49e3-ac83-0f85a5a1e6e9'
+  ProduceID: 'f181853e-708f-4eee-8d69-53cf6da01973'
+  PropagateID: 'f181853e-708f-4eee-8d69-53cf6da01973'
+  ReservedCode1: '892c528f-d345-40ff-82e6-0118d21a4063'
+  ReservedCode2: '892c528f-d345-40ff-82e6-0118d21a4063'
 ---
 
 # 2FAuth Worker
@@ -18,7 +18,7 @@ English | [中文](README.md)
 
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=flat&logo=cloudflare)](https://workers.cloudflare.com/)
 [![Docker](https://img.shields.io/badge/Docker-Supported-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/nap0o/2fauth-worker)
-[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-181717?style=flat&logo=github)](https://github.com/nap0o/2fauth-worker/actions)
+[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-181717?style=flat&logo=github)](https://github.com/pxhzaii/2fauth-worker/actions)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 [**Click here for LIVE DEMO**](https://2fa.nezha.pp.ua)
@@ -43,7 +43,7 @@ Whether you're leveraging Cloudflare's free tier or deploying on your own NAS/mi
 *   Built-in intelligent health checks. If the system detects critical missing keys or improper configurations, it will immediately "shut down" access to prevent your data from being exposed in an insecure environment.
 
 ### 📦 The Ultimate "Undo Button" (Multi-channel Backup)
-*   Supports automatic backups via WebDAV, S3 cloud storage, or Telegram bots. If you lose your phone, reinstall your OS, or even lose your Cloudflare account, you can recover everything instantly from your backup.
+*   Supports automatic backups via WebDAV, S3-compatible storage, Telegram bots, Google Drive, OneDrive, Baidu Netdisk, Dropbox, or Email. If you lose your phone, reinstall your OS, or even lose your Cloudflare account, you can recover everything instantly from your backup.
 
 ---
 
@@ -54,13 +54,13 @@ Whether you're leveraging Cloudflare's free tier or deploying on your own NAS/mi
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Data Ownership | ✅ Full Control (Private/NAS) | ❌ Tied to Big Tech | ❌ Vendor-locked | ✅ Local/Private Cloud | ⚠️ Third-party Hosted |
 | Cross-Platform | ✅ Web+PWA (Universal) | ⚠️ Mobile App only | ❌ Desktop App closed | ⚠️ Mobile App only | ✅ Full Platform Support |
-| Recovery | ✅ Auto Backups (TG/S3) | ⚠️ Manually Exporting | ✅ Cloud Sync | ⚠️ Manage Files Manually | ✅ Cloud Sync |
+| Recovery | ✅ Auto Backups (8 channels) | ⚠️ Manually Exporting | ✅ Cloud Sync | ⚠️ Manage Files Manually | ✅ Cloud Sync |
 | Privacy | ✅ Anonymous, No Tracking | ⚠️ Tied to Big Tech ID | ⚠️ Forced Phone Bind | ✅ No Tracking | ✅ Safe but high profile |
 | Offline Support | ✅ Yes (PWA Cache) | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
 | Cost | ✅ $0 (CF Serverless) | ✅ Free | ✅ Free | ✅ Free | 💰 Subscription based |
 | Vendor Risk | ✅ Source in Hand | ⚠️ Forced migration risks | 🚨 Feature shutdowns (PC) | ✅ Open-source control | ⚠️ Subscription/Closed |
 
-> 🎯 **Summary**: **2FAuth Worker** combines the multi-device convenience of 1Password with the privacy of open-source apps, and the zero cost of Serverless. **Automatic Telegram backup** completely eliminates "data loss anxiety" common in both web and mobile apps, making security truly accessible.
+> 🎯 **Summary**: **2FAuth Worker** combines the multi-device convenience of 1Password with the privacy of open-source apps, and the zero cost of Serverless. **Multi-channel automatic backup** (WebDAV, S3, Telegram, Google Drive, OneDrive, Baidu Netdisk, Dropbox, Email) completely eliminates "data loss anxiety" common in both web and mobile apps, making security truly accessible.
 
 </details>
 
@@ -76,6 +76,8 @@ The most hassle-free way. No server required; Cloudflare hosts it for you for fr
 1. Fork this repository, and give it a `Star`! ⭐
 2. Click the deploy button below <br />
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)
+
+> ⚠️ **Note**: After deployment, you must manually create a D1 database named `2fauth-db` and execute `backend/schema.sql` in the D1 console to create the tables. Then bind the database to the Worker project (binding variable name: `DB`). See the [D1 Database Setup](#d1-database-setup) section below for details.
 
 #### 2. Notes & Authorization
 *   In the deployment wizard, you need to authorize Cloudflare to read this repository.
@@ -102,6 +104,22 @@ Click in sequence: Continue with GitHub -> Select your forked repository (2fauth
 4. Add environment variables and secrets in the settings page (see next step)
 5. Build command: `npm run build --prefix frontend`
 6. Deploy command: `npx wrangler deploy`
+
+</details>
+
+#### D1 Database Setup
+After the first deployment, you must create a D1 database and execute the schema:
+
+<details>
+<summary>Click to view: D1 Database Setup Steps</summary>
+
+1. Go to Cloudflare Dashboard → **Storage & Databases** → **D1 SQL Database** → **Create Database**
+2. Name it `2fauth-db` and click **Create**
+3. Enter the database console, click **Console** tab
+4. Copy the entire contents of [`backend/schema.sql`](backend/schema.sql) from this repository and paste it into the console, then click **Execute**
+5. Go back to your Worker project → **Settings** → **Bindings** → **Add binding** → select **D1 database**
+6. Set the binding variable name to `DB` and select the `2fauth-db` database you just created
+7. Click **Save and Deploy** to apply the binding
 
 </details>
 
@@ -225,18 +243,19 @@ Choose this for continuous deployment or more precise database management.
 
 #### 2. Repository Configuration
 1.  **Fork** this repository.
-2.  Go to `Settings` -> `Secrets and variables` -> `Actions`.
-3.  Add the following secrets:
-  *   `CLOUDFLARE_ACCOUNT_ID`: Your CF Account ID.
-  *   `CLOUDFLARE_API_TOKEN`: Your API Token.
-  *   `CLOUDFLARE_D1_DATABASE_ID`: Your D1 Database ID.
-  *   `CLOUDFLARE_D1_DATABASE_NAME`: `2fauth-db`.
-  *   `ENCRYPTION_KEY`: A 32+ character random key.
-  *   `JWT_SECRET`: A 32+ character random JWT secret.
-  *   `OAUTH_ALLOWED_USERS`: your_email@example.com
-  *   Login method (at least one required):
-      *   Password login: `AUTH_USERNAME` + `AUTH_PASSWORD`
-      *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+2.  Create a D1 database named `2fauth-db` and execute `backend/schema.sql` in the D1 console (see [D1 Database Setup](#d1-database-setup) above).
+3.  Go to `Settings` -> `Secrets and variables` -> `Actions`.
+4.  Add the following secrets:
+   *   `CLOUDFLARE_ACCOUNT_ID`: Your CF Account ID.
+   *   `CLOUDFLARE_API_TOKEN`: Your API Token.
+   *   `CLOUDFLARE_D1_DATABASE_ID`: Your D1 Database ID.
+   *   `CLOUDFLARE_D1_DATABASE_NAME`: `2fauth-db`.
+   *   `ENCRYPTION_KEY`: A 32+ character random key.
+   *   `JWT_SECRET`: A 32+ character random JWT secret.
+   *   `OAUTH_ALLOWED_USERS`: your_email@example.com
+   *   Login method (at least one required):
+       *   Password login: `AUTH_USERNAME` + `AUTH_PASSWORD`
+       *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
 <details>
 <summary>Click to view: Secrets Configuration Guide</summary>
@@ -357,7 +376,7 @@ Regardless of the deployment method, these parameters are critical:
 
 Even if this project stops running, you can still recover your TOTP raw data using your backup file and encryption password. We provide a standalone offline decryption script that does not depend on any external servers:
 
-- **Script Path**: [scripts/decrypt_backup.js](file:///workspaces/2fa.hsiao.nom.za/scripts/decrypt_backup.js)
+- **Script Path**: [`scripts/decrypt_backup.js`](scripts/decrypt_backup.js)
 - **Requirement**: Just [Node.js](https://nodejs.org/) (uses built-in crypto module, no `npm install` required).
 - **Usage**:
   ```bash
@@ -372,12 +391,12 @@ Even if this project stops running, you can still recover your TOTP raw data usi
 To protect your account security, 2FAuth Worker implements a "Multi-Lock" strategy:
 
 1.  **At-Rest Encryption**: All TOTP seeds stored in the database are encrypted using AES. Even if the database file is leaked, unauthorized parties cannot obtain raw keys without the `ENCRYPTION_KEY`.
-2.  **Whitelist-Only Access**: Traditional registration is disabled. Only accounts in the `OAUTH_ALLOWED_USERS` list can access the system.
-3.  **Smart Shield Persistence (Health Shield)**: The system continuously monitors the runtime environment. If any anomalies are detected, it enters protection mode and refuses to generate verification codes.
+2.  **Whitelist-Only Access**: Open registration is disabled. Only accounts in the `OAUTH_ALLOWED_USERS` list can access the system. Supports multiple login methods: password login (`AUTH_USERNAME` + `AUTH_PASSWORD`), or OAuth providers (GitHub, Telegram, Google, Cloudflare Access, Gitee, NodeLoc).
+3.  **Smart Shield Persistence (Health Shield)**: The system continuously monitors the runtime environment. If any anomalies are detected (e.g., missing keys, no login method configured, `OAUTH_ALLOW_ALL` set to true), it enters protection mode and refuses to generate verification codes.
 4.  **End-to-End Isolation**: Sensitive frontend logic is strictly filtered to prevent XSS (Cross-Site Scripting) attacks.
 5.  **Privacy First**: This project contains no tracking code, analytics tools, or third-party cookies. Your data is yours alone.
 
-> 📊 [**Click to view the real-time security audit report generated by GitHub Actions**](https://github.com/nap0o/2fauth-worker/blob/security-audit/README.md)
+> 📊 [**Click to view the real-time security audit report generated by GitHub Actions**](https://github.com/pxhzaii/2fauth-worker/blob/security-audit/README.md)
 
 ---
 
@@ -385,7 +404,7 @@ To protect your account security, 2FAuth Worker implements a "Multi-Lock" strate
 
 ```bash
 # 1. Clone and install dependencies
-git clone https://github.com/nap0o/2fauth-worker.git
+git clone https://github.com/pxhzaii/2fauth-worker.git
 cd 2fauth-worker
 npm install
 

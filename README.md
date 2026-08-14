@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'a0f0f184-bbb7-4b4d-b37e-2ba908e24fec'
-  PropagateID: 'a0f0f184-bbb7-4b4d-b37e-2ba908e24fec'
-  ReservedCode1: 'e5ae6727-cb39-4029-a63b-585b6cb13bc0'
-  ReservedCode2: 'e5ae6727-cb39-4029-a63b-585b6cb13bc0'
+  ProduceID: 'a185ae71-3135-466c-84a3-4fbde0c261df'
+  PropagateID: 'a185ae71-3135-466c-84a3-4fbde0c261df'
+  ReservedCode1: 'c0b10a01-0e1d-4b73-b376-7d3110b4948a'
+  ReservedCode2: 'c0b10a01-0e1d-4b73-b376-7d3110b4948a'
 ---
 
 # 2FAuth Worker
@@ -18,7 +18,7 @@ AIGC:
 
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=flat&logo=cloudflare)](https://workers.cloudflare.com/)
 [![Docker](https://img.shields.io/badge/Docker-Supported-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/nap0o/2fauth-worker)
-[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-181717?style=flat&logo=github)](https://github.com/nap0o/2fauth-worker/actions)
+[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-181717?style=flat&logo=github)](https://github.com/pxhzaii/2fauth-worker/actions)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 [**点击此处查看 Demo 演示**](https://2fa.nezha.pp.ua)
@@ -43,7 +43,7 @@ AIGC:
 *   我们内置了智能安检逻辑。如果程序检测到关键密钥丢失或配置不当，它会立即“拉闸”阻断访问，防止你的数据因环境不安全而暴露。
 
 ### 📦 丢不了的“后悔药” (Multi-channel Backup)
-*   支持 WebDAV、S3 云存储或 Telegram 机器人自动备份。即使手机丢了、系统重装了，甚至 Cloudflare 账号没了，你也能通过备份瞬间找回所有账号。
+*   支持 WebDAV、S3 兼容存储、Telegram 机器人、Google Drive、OneDrive、百度网盘、Dropbox、Email 邮件等多种渠道自动备份。即使手机丢了、系统重装了，甚至 Cloudflare 账号没了，你也能通过备份瞬间找回所有账号。
 
 <details>
 <summary>点击查看：同类型产品对比</summary>
@@ -52,13 +52,13 @@ AIGC:
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 数据所有权 | ✅ 完全掌控 (私有云/NAS) | ❌ 绑定大厂云端 | ❌ 锁定在厂商服务器 | ✅ 本地文件/私有云 | ⚠️ 托管在三方平台 |
 | 多端访问 | ✅ 网页+PWA (全平台) | ⚠️ 仅手机 App | ❌ 桌面端已关停 | ⚠️ 仅手机 App | ✅ 全平台支持 |
-| 恢复便利性 | ✅ 多通道自动备份 (TG/S3) | ⚠️ 换手机导入麻烦 | ✅ 云同步 | ⚠️ 需维护备份文件 | ✅ 云同步 |
+| 恢复便利性 | ✅ 多通道自动备份 (8 种渠道) | ⚠️ 换手机导入麻烦 | ✅ 云同步 | ⚠️ 需维护备份文件 | ✅ 云同步 |
 | 隐私保护 | ✅ 匿名部署，无追踪 | ⚠️ 大厂账号绑定 | ⚠️ 强制绑定手机号 | ✅ 无追踪 | ✅ 安全但目标较大 |
 | 离线可用性 | ✅ 支持 (PWA 强力缓存) | ✅ 支持 | ✅ 支持 | ✅ 支持 | ✅ 支持 |
 | 部署成本 | ✅ 0 成本 (CF Serverless) | ✅ 免费 | ✅ 免费 | ✅ 免费 | 💰 订阅/自建较重 |
 | 厂商倒闭风险 | ✅ 源码在手，永不丧失 | ⚠️ 生态强制迁移风险 | 🚨 随时下线(如 PC 端) | ✅ 开源可控 | ⚠️ 订阅制/闭源风险 |
 
-> 🎯 **小结**：**2FAuth Worker** 既有 1Password 的多端便利，又有开源 App 的隐私性，更有 Serverless 的零成本。**支持 Telegram 机器人自动备份**更是解决了所有 Web 端和 App 端的“丢数据焦虑”，让安全触手可得。
+> 🎯 **小结**：**2FAuth Worker** 既有 1Password 的多端便利，又有开源 App 的隐私性，更有 Serverless 的零成本。**多通道自动备份**（WebDAV、S3、Telegram、Google Drive、OneDrive、百度网盘、Dropbox、Email）更是解决了所有 Web 端和 App 端的“丢数据焦虑”，让安全触手可得。
 
 </details>
 
@@ -74,6 +74,8 @@ AIGC:
 1. Fork 本项目仓库，发财小手点`Star`! ⭐
 2. 点击下方部署按钮 <br />
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)
+
+> ⚠️ **注意**：部署完成后，必须手动创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表，然后将数据库绑定到 Worker 项目（绑定变量名：`DB`）。详见下方 [D1 数据库配置](#d1-数据库配置) 章节。
 
 #### 2. 授权指引
 *   在部署向导中，你需要授权 Cloudflare 读取该仓库。
@@ -100,6 +102,22 @@ AIGC:
 4. 在设置页面添加环境变量和机密（见下一步）
 5. 构建命令填写：`npm run build --prefix frontend`
 6. 部署命令填写：`npx wrangler deploy`
+
+</details>
+
+#### D1 数据库配置
+首次部署后，必须创建 D1 数据库并执行建表脚本：
+
+<details>
+<summary>点击查看：D1 数据库配置步骤</summary>
+
+1. 进入 Cloudflare Dashboard → **存储和数据库** → **D1 SQL 数据库** → **创建数据库**
+2. 名称填写 `2fauth-db`，点击 **创建**
+3. 进入数据库控制台，点击 **Console** 标签页
+4. 将仓库中 [`backend/schema.sql`](backend/schema.sql) 的完整内容复制到控制台，点击 **执行**
+5. 返回你的 Worker 项目 → **设置** → **绑定** → **添加绑定** → 选择 **D1 数据库**
+6. 绑定变量名填写 `DB`，选择刚创建的 `2fauth-db` 数据库
+7. 点击 **保存并部署** 使绑定生效
 
 </details>
 
@@ -225,18 +243,19 @@ docker run -d --name 2fauth-worker \
 
 #### 2. 配置仓库
 1.  **Fork** 本仓库到你的 GitHub 账号。
-2.  前往仓库的 `Settings` -> `Secrets and variables` -> `Actions`。
-3.  添加如下 Secrets：
-  *   `CLOUDFLARE_ACCOUNT_ID`：你的 CF 账户 ID。
-  *   `CLOUDFLARE_API_TOKEN`：刚刚生成的 API 令牌。
-  *   `CLOUDFLARE_D1_DATABASE_ID`：D1 数据库的 ID。
-  *   `CLOUDFLARE_D1_DATABASE_NAME`：D1 数据库的名称。
-  *   `ENCRYPTION_KEY`：32位以上随机密钥。
-  *   `JWT_SECRET`：32位以上随机JWT密钥。
-  *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
-  *   登录方式（至少选一种）：
-      *   账号密码登录：`AUTH_USERNAME` + `AUTH_PASSWORD`
-      *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+2.  创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表（详见上方 [D1 数据库配置](#d1-数据库配置)）。
+3.  前往仓库的 `Settings` -> `Secrets and variables` -> `Actions`。
+4.  添加如下 Secrets：
+   *   `CLOUDFLARE_ACCOUNT_ID`：你的 CF 账户 ID。
+   *   `CLOUDFLARE_API_TOKEN`：刚刚生成的 API 令牌。
+   *   `CLOUDFLARE_D1_DATABASE_ID`：D1 数据库的 ID。
+   *   `CLOUDFLARE_D1_DATABASE_NAME`：D1 数据库的名称。
+   *   `ENCRYPTION_KEY`：32位以上随机密钥。
+   *   `JWT_SECRET`：32位以上随机JWT密钥。
+   *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
+   *   登录方式（至少选一种）：
+       *   账号密码登录：`AUTH_USERNAME` + `AUTH_PASSWORD`
+       *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
 <details>
 <summary>点击查看：Secrets 配置说明</summary>
@@ -358,7 +377,7 @@ docker run -d --name 2fauth-worker \
 
 即使本项目停止运行，您也可以通过备份文件和您的加密密码找回 TOTP 原始数据。我们提供了一个独立的离线解密脚本，它不依赖于任何外部服务器：
 
-- **脚本路径**：[scripts/decrypt_backup.js](file:///workspaces/2fa.hsiao.nom.za/scripts/decrypt_backup.js)
+- **脚本路径**：[`scripts/decrypt_backup.js`](scripts/decrypt_backup.js)
 - **使用环境**：仅需安装 [Node.js](https://nodejs.org/) (内置 crypto 模块，无需 npm install)。
 - **使用方法**：
   ```bash
@@ -373,12 +392,12 @@ docker run -d --name 2fauth-worker \
 为了保护您的账号安全，2FAuth Worker 在设计上采取了“多重锁死”策略：
 
 1.  **静态数据全加密**：数据库中存储的所有 TOTP 密钥种子（Secret）都经过 AES 高强度加密。即使数据库文件不幸泄露，黑客在没有 `ENCRYPTION_KEY` 的情况下也无法获得原始密钥。
-2.  **访问白名单制度**：系统拒绝任何通过用户名/密码的传统注册。只有在 `OAUTH_ALLOWED_USERS` 配置列表中的用户才能进入系统，拒绝任何陌生人蹭用。
-3.  **智能环境感知 (Smart Shield)**：系统在启动和运行时会持续检查运行环境（如环境变量是否存在、数据库是否异常）。一旦发现异常，系统将拒绝生成任何验证码并进入保护模式。
+2.  **访问白名单制度**：系统关闭开放注册，只有在 `OAUTH_ALLOWED_USERS` 配置列表中的用户才能进入系统。支持多种登录方式：账号密码登录（`AUTH_USERNAME` + `AUTH_PASSWORD`），或 OAuth 第三方登录（GitHub、Telegram、Google、Cloudflare Access、Gitee、NodeLoc）。
+3.  **智能环境感知 (Smart Shield)**：系统在启动和运行时会持续检查运行环境（如环境变量是否完整、是否配置了至少一种登录方式、`OAUTH_ALLOW_ALL` 是否误开）。一旦发现异常，系统将拒绝生成任何验证码并进入保护模式。
 4.  **端到端隔离**：前端生成的敏感操作逻辑经过严格过滤，严禁任何 XSS (跨站脚本) 攻击。
 5.  **隐私第一**：本项目不包含任何追踪代码、分析工具或第三方统计插件。你的数据只属于你。
 
-> 📊 [**点击查看由 GitHub Actions 自动生成的安全审计报告**](https://github.com/nap0o/2fauth-worker/blob/security-audit/README.md)
+> 📊 [**点击查看由 GitHub Actions 自动生成的安全审计报告**](https://github.com/pxhzaii/2fauth-worker/blob/security-audit/README.md)
 
 ---
 
@@ -386,7 +405,7 @@ docker run -d --name 2fauth-worker \
 
 ```bash
 # 1. 克隆并安装依赖
-git clone https://github.com/nap0o/2fauth-worker.git
+git clone https://github.com/pxhzaii/2fauth-worker.git
 cd 2fauth-worker
 npm install
 

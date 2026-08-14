@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '64878e67-19cd-42bf-889d-0b93dcd8e9ad'
-  PropagateID: '64878e67-19cd-42bf-889d-0b93dcd8e9ad'
-  ReservedCode1: '1a103375-f916-4e2e-af97-7a7b597a1034'
-  ReservedCode2: '1a103375-f916-4e2e-af97-7a7b597a1034'
+  ProduceID: 'd4a01648-c7a0-4fc4-bf1b-6ce5f915c36d'
+  PropagateID: 'd4a01648-c7a0-4fc4-bf1b-6ce5f915c36d'
+  ReservedCode1: '284fc360-63a7-4a9e-8e21-7d47fa7c1620'
+  ReservedCode2: '284fc360-63a7-4a9e-8e21-7d47fa7c1620'
 ---
 
 # 2FAuth Worker
@@ -79,22 +79,28 @@ AIGC:
 *   在部署向导中，你需要授权 Cloudflare 读取该仓库。
 
 <details>
-<summary>点击查看：授权指引示意图</summary>  
-<img height="200" src="https://github.com/user-attachments/assets/cb64bc2f-6dcc-40cb-a781-3bc2c7bc5b28" /><br/>
-<img height="400" src="https://github.com/user-attachments/assets/3f186ea6-80f5-4d78-b90f-724af33a73ae" />
-<img height="400" src="https://github.com/user-attachments/assets/c1f2d5ee-2f3f-47c2-969f-00308cadff21" />
+<summary>点击查看：授权指引</summary>
+
+1. 在 Cloudflare 部署向导中，选择 **Connect to Git**
+2. 授权 Cloudflare 访问你的 GitHub 账号
+3. 选择你 Fork 后的 `2fauth-worker` 仓库
+4. 授权完成后，Cloudflare 会自动读取仓库源码
+
 </details>
 
 #### 3. 部署流程
 依次点击：Continue with GitHub -> 选择你 Fork 后的仓库（2fauth-worker）-> 下一步 -> 部署 -> 继续处理项目 -> 设置
 
 <details>
-<summary>点击查看：详细部署步骤示意图</summary>
-<img height="400" src="https://github.com/user-attachments/assets/6a933580-98d5-4b09-ac1f-e2aa33380807" /><br />
-<img height="400" src="https://github.com/user-attachments/assets/14e57427-0eac-4d20-8d9c-f8957803f247" /><br />
-<img height="400" src="https://github.com/user-attachments/assets/b123a063-4671-4fc2-94fc-94b7a2d71235" /><br />
-<img height="600" src="https://github.com/user-attachments/assets/c4be75c1-2732-4dfb-abaa-72384f482d4f" />
-<img height="300" src="https://github.com/user-attachments/assets/ddce1191-353c-466d-a55c-044a1fcc47b4" />
+<summary>点击查看：详细部署步骤</summary>
+
+1. 点击 **Continue with GitHub**，选择你 Fork 后的仓库（`2fauth-worker`）
+2. 点击 **下一步** → **部署**，等待构建完成
+3. 部署完成后，点击 **继续处理项目** → **设置**
+4. 在设置页面添加环境变量和机密（见下一步）
+5. 构建命令填写：`npm run build --prefix frontend`
+6. 部署命令填写：`npm run build --prefix frontend && npx wrangler deploy`
+
 </details>
 
 #### 4. 在`设置`添加如下变量和机密
@@ -107,8 +113,14 @@ AIGC:
       *   其他 OAuth 平台见下方说明
 
 <details>
-<summary>点击查看：添加变量和机密示意图</summary>
-<img height="600" src="https://github.com/user-attachments/assets/51d6e702-142e-4f58-8f02-c4a0bbcf009c" />
+<summary>点击查看：添加变量和机密步骤</summary>
+
+1. 进入 Workers & Pages → 选择你的 `2fauth-worker` 项目
+2. 点击 **设置** → **变量和机密**
+3. 点击 **添加**，选择类型为 **机密**（Secret）或 **文本**（Text）
+4. 依次添加上方列出的变量
+5. 添加完成后，点击 **保存并部署** 使变量生效
+
 </details>
 
 ---
@@ -186,27 +198,29 @@ docker run -d --name 2fauth-worker \
 
 *   在 `存储和数据库` -> `D1 SQL 数据库` 中创建一个名为 `2fauth-db` 的数据库，并记录其 **Database ID**。
 <details>
-<summary>点击查看：创建 D1 SQL 数据库的具体步骤</summary>
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/80824e1b-73f8-4d13-992c-a51dc4e53308" /><br />
-<img height="350" alt="image" src="https://github.com/user-attachments/assets/560c9977-2f89-4135-839d-bdf37208bfdc" /><br />
-<img height="350" alt="image" src="https://github.com/user-attachments/assets/25261345-8da6-40de-86b6-a23e910e737d" />
+<summary>点击查看：创建 D1 SQL 数据库的步骤</summary>
+
+1. 登录 Cloudflare Dashboard
+2. 左侧菜单选择 **存储和数据库** → **D1 SQL 数据库**
+3. 点击 **创建数据库**
+4. 数据库名称填写 `2fauth-db`
+5. 点击 **创建**，完成后记录 **Database ID**
+
 </details>
 
 
 *   在 Cloudflare 控制面板获取 **API 令牌**（需要 `编辑 Cloudflare Workers` 权限）。
 <details>
-<summary>点击查看：获取 Cloudflare Worker 部署令牌的具体步骤</summary>
+<summary>点击查看：获取 Cloudflare Worker 部署令牌的步骤</summary>
 
 1. 登录 Cloudflare Dashboard
-2. [前往获取](https://dash.cloudflare.com/profile/api-tokens)  https://dash.cloudflare.com/profile/api-tokens
-3. 点击“创建令牌” 
-4. 选择使用模版 “编辑 Cloudflare Workers”  
-5. 配置“帐户资源”和“区域资源”
-6. 依次点击“继续以显示摘要”，点击“创建令牌”
-7. 复制生成的令牌
+2. 前往 [API 令牌页面](https://dash.cloudflare.com/profile/api-tokens)
+3. 点击 **创建令牌**
+4. 选择使用模版 **编辑 Cloudflare Workers**
+5. 配置 **帐户资源** 和 **区域资源**
+6. 依次点击 **继续以显示摘要** → **创建令牌**
+7. 复制生成的令牌（仅显示一次）
 
-<img width="500"  alt="image" src="https://github.com/user-attachments/assets/6487aa6e-e505-4980-aef4-e08172116746" /><br />
-<img width="800"  alt="image" src="https://github.com/user-attachments/assets/d4c737f7-2d9f-4cfb-a712-b1af416c8ef6" />
 </details>
 
 #### 2. 配置仓库
@@ -225,16 +239,28 @@ docker run -d --name 2fauth-worker \
       *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
 <details>
-<summary>点击查看：Secrets 配置示例图</summary>  
-<img width="600" alt="Secrets 配置示例" src="https://github.com/user-attachments/assets/ef907021-303d-4fd5-ba3e-913e8b0014a5" />
+<summary>点击查看：Secrets 配置说明</summary>
+
+1. 进入你 Fork 的仓库页面
+2. 点击 **Settings** → **Secrets and variables** → **Actions**
+3. 点击 **New repository secret**
+4. 依次添加上方列出的每个 Secret（名称和值）
+5. 添加完成后，所有 Secret 会显示在列表中
+
 </details>
 
 #### 3. 触发部署
 *   前往仓库的 `Actions` 页面，手动运行 `Deploy to Cloudflare Workers` 工作流，或向 `main` 分支推送代码即可。
 
 <details>
-<summary>点击查看：手动触发部署示例图</summary>  
-<img width="600" alt="手动触发部署" src="https://github.com/user-attachments/assets/b2891365-5c1a-4a46-83c6-5cd53dd4b895" />
+<summary>点击查看：手动触发部署步骤</summary>
+
+1. 进入仓库的 **Actions** 页面
+2. 左侧选择 **Deploy to Cloudflare Workers** 工作流
+3. 点击右侧 **Run workflow** 按钮
+4. 选择 `main` 分支，点击 **Run workflow**
+5. 等待构建和部署完成（约 2-3 分钟）
+
 </details>
 
 ---
@@ -273,8 +299,17 @@ docker run -d --name 2fauth-worker \
 3. 将 `Client ID`  `Client Secret` 和 `OAUTH_GITHUB_REDIRECT_URI` 填入环境变量。
 
 <details>
-<summary>点击查看：Github OAuth 配置示意图</summary>
-<img width="600" alt="Github OAuth 配置示意" src="https://github.com/user-attachments/assets/aa03b15f-deb2-4e48-bf4b-e57be342adbb" />
+<summary>点击查看：Github OAuth 配置步骤</summary>
+
+1. 访问 GitHub `Settings` → `Developer Settings` → `OAuth Apps` → **New OAuth App**
+2. 填写应用名称（如 `2fauth`）
+3. Homepage URL 填写你的域名（如 `https://2fa.5as.cn`）
+4. Callback URL 填写 `https://你的域名/oauth/callback`
+5. 点击 **Register application**
+6. 记录 **Client ID**
+7. 点击 **Generate a new client secret**，记录 **Client Secret**
+8. 将 Client ID、Client Secret 和 Redirect URI 填入环境变量
+
 </details>
 
 #### 如何配置Telegram第三方登录
@@ -302,9 +337,21 @@ docker run -d --name 2fauth-worker \
 7.  将 `OAUTH_CLOUDFLARE_CLIENT_ID`、`OAUTH_CLOUDFLARE_CLIENT_SECRET`、 `OAUTH_CLOUDFLARE_REDIRECT_URI` 和 `OAUTH_CLOUDFLARE_ORG_DOMAIN` 填入环境变量。
 
 <details>
-<summary>点击查看：Cloudflare Access OAuth 配置示意图</summary>
-<img height="500" src="https://github.com/user-attachments/assets/1e315f8f-1932-4c90-a2d7-0edf8049529f" />
-<img height="400" src="https://github.com/user-attachments/assets/c6101ee8-f3c3-44f6-9286-f17865f8fb10" />
+<summary>点击查看：Cloudflare Access OAuth 配置步骤</summary>
+
+1. 进入 **Cloudflare Zero Trust Dashboard** → **Access** → **Applications**
+2. 点击 **Add an application** → 选择 **SaaS** 应用
+3. 配置应用信息：
+   - **应用程序**: 输入任意名称（如 `2fauth`）
+   - **选择身份验证协议**: `OIDC`
+   - **重定向 URL**: `https://你的域名/oauth/callback`
+4. 复制保存 **客户端 ID** 和 **客户端密码**
+5. Access 策略 → 点击 **创建新策略** → 添加策略：
+   - **策略**: `Allow`
+   - **选择**: `Everyone`
+6. 其余均不需要额外配置，一直下一步到完成
+7. 将 `OAUTH_CLOUDFLARE_CLIENT_ID`、`OAUTH_CLOUDFLARE_CLIENT_SECRET`、`OAUTH_CLOUDFLARE_REDIRECT_URI` 和 `OAUTH_CLOUDFLARE_ORG_DOMAIN` 填入环境变量
+
 </details>
 
 ## 🔓 离线恢复 (Offline Recovery)

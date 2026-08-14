@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'a185ae71-3135-466c-84a3-4fbde0c261df'
-  PropagateID: 'a185ae71-3135-466c-84a3-4fbde0c261df'
-  ReservedCode1: 'c0b10a01-0e1d-4b73-b376-7d3110b4948a'
-  ReservedCode2: 'c0b10a01-0e1d-4b73-b376-7d3110b4948a'
+  ProduceID: '0cf96516-9016-436c-ab3a-24335d587d78'
+  PropagateID: '0cf96516-9016-436c-ab3a-24335d587d78'
+  ReservedCode1: '4f0b0052-77de-40d2-b018-1858970c6ef0'
+  ReservedCode2: '4f0b0052-77de-40d2-b018-1858970c6ef0'
 ---
 
 # 2FAuth Worker
@@ -77,39 +77,18 @@ AIGC:
 
 > ⚠️ **注意**：部署完成后，必须手动创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表，然后将数据库绑定到 Worker 项目（绑定变量名：`DB`）。详见下方 [D1 数据库配置](#d1-数据库配置) 章节。
 
-#### 2. 授权指引
-*   在部署向导中，你需要授权 Cloudflare 读取该仓库。
-
-<details>
-<summary>点击查看：授权指引</summary>
-
-1. 在 Cloudflare 部署向导中，选择 **Connect to Git**
-2. 授权 Cloudflare 访问你的 GitHub 账号
-3. 选择你 Fork 后的 `2fauth-worker` 仓库
-4. 授权完成后，Cloudflare 会自动读取仓库源码
-
-</details>
+#### 2. 授权
+在部署向导中，选择 **Connect to Git**，授权 Cloudflare 访问你的 GitHub 账号，然后选择你 Fork 后的 `2fauth-worker` 仓库。授权完成后 Cloudflare 会自动读取仓库源码。
 
 #### 3. 部署流程
-依次点击：Continue with GitHub -> 选择你 Fork 后的仓库（2fauth-worker）-> 下一步 -> 部署 -> 继续处理项目 -> 设置
-
-<details>
-<summary>点击查看：详细部署步骤</summary>
-
 1. 点击 **Continue with GitHub**，选择你 Fork 后的仓库（`2fauth-worker`）
 2. 点击 **下一步** → **部署**，等待构建完成
 3. 部署完成后，点击 **继续处理项目** → **设置**
-4. 在设置页面添加环境变量和机密（见下一步）
-5. 构建命令填写：`npm run build --prefix frontend`
-6. 部署命令填写：`npx wrangler deploy`
-
-</details>
+4. 构建命令填写：`npm run build --prefix frontend && npx wrangler deploy`
+5. 在设置页面添加环境变量和机密（见下一步）
 
 #### D1 数据库配置
 首次部署后，必须创建 D1 数据库并执行建表脚本：
-
-<details>
-<summary>点击查看：D1 数据库配置步骤</summary>
 
 1. 进入 Cloudflare Dashboard → **存储和数据库** → **D1 SQL 数据库** → **创建数据库**
 2. 名称填写 `2fauth-db`，点击 **创建**
@@ -119,27 +98,16 @@ AIGC:
 6. 绑定变量名填写 `DB`，选择刚创建的 `2fauth-db` 数据库
 7. 点击 **保存并部署** 使绑定生效
 
-</details>
-
 #### 4. 在`设置`添加如下变量和机密
-  *   `ENCRYPTION_KEY`：32位以上随机密钥。
-  *   `JWT_SECRET`：32位以上随机JWT密钥。
-  *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
-  *   登录方式（至少选一种）：
-      *   账号密码登录：`AUTH_USERNAME`（用户名）+ `AUTH_PASSWORD`（密码）
-      *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
-      *   其他 OAuth 平台见下方说明
+*   `ENCRYPTION_KEY`：32位以上随机密钥（建议类型：机密）
+*   `JWT_SECRET`：32位以上随机JWT密钥（建议类型：机密）
+*   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com（建议类型：文本）
+*   登录方式（至少选一种）：
+    *   账号密码登录：`AUTH_USERNAME`（用户名）+ `AUTH_PASSWORD`（密码），建议类型：机密
+    *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+    *   其他 OAuth 平台见下方说明
 
-<details>
-<summary>点击查看：添加变量和机密步骤</summary>
-
-1. 进入 Workers & Pages → 选择你的 `2fauth-worker` 项目
-2. 点击 **设置** → **变量和机密**
-3. 点击 **添加**，选择类型为 **机密**（Secret）或 **文本**（Text）
-4. 依次添加上方列出的变量
-5. 添加完成后，点击 **保存并部署** 使变量生效
-
-</details>
+添加方式：进入 Workers & Pages → 选择你的 `2fauth-worker` 项目 → **设置** → **变量和机密** → **添加**，选择类型为 **机密**（Secret）或 **文本**（Text），依次添加上方列出的变量，添加完成后点击 **保存并部署** 使变量生效。
 
 ---
 
@@ -215,72 +183,47 @@ docker run -d --name 2fauth-worker \
 #### 1. 准备工作
 
 *   在 `存储和数据库` -> `D1 SQL 数据库` 中创建一个名为 `2fauth-db` 的数据库，并记录其 **Database ID**。
-<details>
-<summary>点击查看：创建 D1 SQL 数据库的步骤</summary>
-
-1. 登录 Cloudflare Dashboard
-2. 左侧菜单选择 **存储和数据库** → **D1 SQL 数据库**
-3. 点击 **创建数据库**
-4. 数据库名称填写 `2fauth-db`
-5. 点击 **创建**，完成后记录 **Database ID**
-
-</details>
-
+    1. 登录 Cloudflare Dashboard
+    2. 左侧菜单选择 **存储和数据库** → **D1 SQL 数据库**
+    3. 点击 **创建数据库**
+    4. 数据库名称填写 `2fauth-db`
+    5. 点击 **创建**，完成后记录 **Database ID**
 
 *   在 Cloudflare 控制面板获取 **API 令牌**（需要 `编辑 Cloudflare Workers` 权限）。
-<details>
-<summary>点击查看：获取 Cloudflare Worker 部署令牌的步骤</summary>
-
-1. 登录 Cloudflare Dashboard
-2. 前往 [API 令牌页面](https://dash.cloudflare.com/profile/api-tokens)
-3. 点击 **创建令牌**
-4. 选择使用模版 **编辑 Cloudflare Workers**
-5. 配置 **帐户资源** 和 **区域资源**
-6. 依次点击 **继续以显示摘要** → **创建令牌**
-7. 复制生成的令牌（仅显示一次）
-
-</details>
+    1. 登录 Cloudflare Dashboard
+    2. 前往 [API 令牌页面](https://dash.cloudflare.com/profile/api-tokens)
+    3. 点击 **创建令牌**
+    4. 选择使用模版 **编辑 Cloudflare Workers**
+    5. 配置 **帐户资源** 和 **区域资源**
+    6. 依次点击 **继续以显示摘要** → **创建令牌**
+    7. 复制生成的令牌（仅显示一次）
 
 #### 2. 配置仓库
 1.  **Fork** 本仓库到你的 GitHub 账号。
 2.  创建名为 `2fauth-db` 的 D1 数据库，并在 D1 控制台执行 `backend/schema.sql` 建表（详见上方 [D1 数据库配置](#d1-数据库配置)）。
 3.  前往仓库的 `Settings` -> `Secrets and variables` -> `Actions`。
 4.  添加如下 Secrets：
-   *   `CLOUDFLARE_ACCOUNT_ID`：你的 CF 账户 ID。
-   *   `CLOUDFLARE_API_TOKEN`：刚刚生成的 API 令牌。
-   *   `CLOUDFLARE_D1_DATABASE_ID`：D1 数据库的 ID。
-   *   `CLOUDFLARE_D1_DATABASE_NAME`：D1 数据库的名称。
-   *   `ENCRYPTION_KEY`：32位以上随机密钥。
-   *   `JWT_SECRET`：32位以上随机JWT密钥。
-   *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
-   *   登录方式（至少选一种）：
-       *   账号密码登录：`AUTH_USERNAME` + `AUTH_PASSWORD`
-       *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+    *   `CLOUDFLARE_ACCOUNT_ID`：你的 CF 账户 ID
+    *   `CLOUDFLARE_API_TOKEN`：刚刚生成的 API 令牌
+    *   `CLOUDFLARE_D1_DATABASE_ID`：D1 数据库的 ID
+    *   `CLOUDFLARE_D1_DATABASE_NAME`：D1 数据库的名称
+    *   `ENCRYPTION_KEY`：32位以上随机密钥
+    *   `JWT_SECRET`：32位以上随机JWT密钥
+    *   `OAUTH_ALLOWED_USERS`：你的邮箱@example.com
+    *   登录方式（至少选一种）：
+        *   账号密码登录：`AUTH_USERNAME` + `AUTH_PASSWORD`
+        *   GitHub OAuth：`OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
-<details>
-<summary>点击查看：Secrets 配置说明</summary>
-
-1. 进入你 Fork 的仓库页面
-2. 点击 **Settings** → **Secrets and variables** → **Actions**
-3. 点击 **New repository secret**
-4. 依次添加上方列出的每个 Secret（名称和值）
-5. 添加完成后，所有 Secret 会显示在列表中
-
-</details>
+    添加方式：进入你 Fork 的仓库页面 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`，依次添加上方列出的每个 Secret。
 
 #### 3. 触发部署
 *   前往仓库的 `Actions` 页面，手动运行 `Deploy to Cloudflare Workers` 工作流，或向 `main` 分支推送代码即可。
 
-<details>
-<summary>点击查看：手动触发部署步骤</summary>
-
-1. 进入仓库的 **Actions** 页面
-2. 左侧选择 **Deploy to Cloudflare Workers** 工作流
-3. 点击右侧 **Run workflow** 按钮
-4. 选择 `main` 分支，点击 **Run workflow**
-5. 等待构建和部署完成（约 2-3 分钟）
-
-</details>
+    1. 进入仓库的 **Actions** 页面
+    2. 左侧选择 **Deploy to Cloudflare Workers** 工作流
+    3. 点击右侧 **Run workflow** 按钮
+    4. 选择 `main` 分支，点击 **Run workflow**
+    5. 等待构建和部署完成（约 2-3 分钟）
 
 ---
 
@@ -312,24 +255,15 @@ docker run -d --name 2fauth-worker \
 
 ---
 
-#### 如何配置Github第三方登录（推荐）
-1. 访问 GitHub `Settings` -> `Developer Settings` -> `OAuth Apps` -> **New OAuth App**。
-2. 回调地址 (Callback URL) 必须填写：`https://你的域名/oauth/callback`。
-3. 将 `Client ID`  `Client Secret` 和 `OAUTH_GITHUB_REDIRECT_URI` 填入环境变量。
-
-<details>
-<summary>点击查看：Github OAuth 配置步骤</summary>
-
+#### 如何配置 Github 第三方登录（推荐）
 1. 访问 GitHub `Settings` → `Developer Settings` → `OAuth Apps` → **New OAuth App**
 2. 填写应用名称（如 `2fauth`）
 3. Homepage URL 填写你的域名（如 `https://2fa.5as.cn`）
-4. Callback URL 填写 `https://你的域名/oauth/callback`
+4. 回调地址 (Callback URL) 必须填写：`https://你的域名/oauth/callback`
 5. 点击 **Register application**
 6. 记录 **Client ID**
 7. 点击 **Generate a new client secret**，记录 **Client Secret**
-8. 将 Client ID、Client Secret 和 Redirect URI 填入环境变量
-
-</details>
+8. 将 `Client ID`、`Client Secret` 和 `OAUTH_GITHUB_REDIRECT_URI` 填入环境变量
 
 #### 如何配置Telegram第三方登录
 1. 在 Telegram 搜索并添加官方机器人 **[@BotFather](https://t.me/BotFather)**，按照提示创建机器人。
@@ -341,37 +275,19 @@ docker run -d --name 2fauth-worker \
 
 5. 将 `OAUTH_TELEGRAM_BOT_TOKEN`、`OAUTH_TELEGRAM_BOT_NAME` 填入环境变量。
 
-#### 如何配置Cloudflared Access 第三方登录
-1.  进入 **Cloudflare Zero Trust Dashboard** -> **Access** -> **Applications**。
-2.  创建一个 **SaaS** 应用 (Select "SaaS")。
-3.  配置 **Application**:
-    - **应用程序**:  `输入任意名称都行，如 2fauth`
-    - **选择身份验证协议**: `OIDC`
-    - **重定向 URL**: `https://你的域名/oauth/callback`
-4.  复制保存关键信息备用， `客户端 ID` 和 `客户端密码`。
-5.  Access 策略 -> 点击创建新策略 -> 添加策略
-    - **策略**: `Allow`
-    - **选择**：`Everyone`
-6.  其余均不需要额外配置，一直下一步到完成
-7.  将 `OAUTH_CLOUDFLARE_CLIENT_ID`、`OAUTH_CLOUDFLARE_CLIENT_SECRET`、 `OAUTH_CLOUDFLARE_REDIRECT_URI` 和 `OAUTH_CLOUDFLARE_ORG_DOMAIN` 填入环境变量。
-
-<details>
-<summary>点击查看：Cloudflare Access OAuth 配置步骤</summary>
-
+#### 如何配置 Cloudflare Access 第三方登录
 1. 进入 **Cloudflare Zero Trust Dashboard** → **Access** → **Applications**
 2. 点击 **Add an application** → 选择 **SaaS** 应用
 3. 配置应用信息：
-   - **应用程序**: 输入任意名称（如 `2fauth`）
-   - **选择身份验证协议**: `OIDC`
-   - **重定向 URL**: `https://你的域名/oauth/callback`
-4. 复制保存 **客户端 ID** 和 **客户端密码**
+    - **应用程序**: 输入任意名称（如 `2fauth`）
+    - **选择身份验证协议**: `OIDC`
+    - **重定向 URL**: `https://你的域名/oauth/callback`
+4. 复制保存 **Client ID** 和 **Client Secret**
 5. Access 策略 → 点击 **创建新策略** → 添加策略：
-   - **策略**: `Allow`
-   - **选择**: `Everyone`
+    - **策略**: `Allow`
+    - **选择**: `Everyone`
 6. 其余均不需要额外配置，一直下一步到完成
 7. 将 `OAUTH_CLOUDFLARE_CLIENT_ID`、`OAUTH_CLOUDFLARE_CLIENT_SECRET`、`OAUTH_CLOUDFLARE_REDIRECT_URI` 和 `OAUTH_CLOUDFLARE_ORG_DOMAIN` 填入环境变量
-
-</details>
 
 ## 🔓 离线恢复 (Offline Recovery)
 

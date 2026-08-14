@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'f181853e-708f-4eee-8d69-53cf6da01973'
-  PropagateID: 'f181853e-708f-4eee-8d69-53cf6da01973'
-  ReservedCode1: '892c528f-d345-40ff-82e6-0118d21a4063'
-  ReservedCode2: '892c528f-d345-40ff-82e6-0118d21a4063'
+  ProduceID: '7da25856-0389-4571-92c7-feed356014eb'
+  PropagateID: '7da25856-0389-4571-92c7-feed356014eb'
+  ReservedCode1: '218e3e8a-e7ba-4102-b151-d9c4bcabdd39'
+  ReservedCode2: '218e3e8a-e7ba-4102-b151-d9c4bcabdd39'
 ---
 
 # 2FAuth Worker
@@ -79,39 +79,18 @@ The most hassle-free way. No server required; Cloudflare hosts it for you for fr
 
 > ⚠️ **Note**: After deployment, you must manually create a D1 database named `2fauth-db` and execute `backend/schema.sql` in the D1 console to create the tables. Then bind the database to the Worker project (binding variable name: `DB`). See the [D1 Database Setup](#d1-database-setup) section below for details.
 
-#### 2. Notes & Authorization
-*   In the deployment wizard, you need to authorize Cloudflare to read this repository.
-
-<details>
-<summary>Click to view: Authorization Guide</summary>
-
-1. In the Cloudflare deployment wizard, select **Connect to Git**
-2. Authorize Cloudflare to access your GitHub account
-3. Select your forked `2fauth-worker` repository
-4. After authorization, Cloudflare will automatically read the repository source code
-
-</details>
+#### 2. Authorization
+In the deployment wizard, select **Connect to Git**, authorize Cloudflare to access your GitHub account, then select your forked `2fauth-worker` repository. Cloudflare will automatically read the repository source code after authorization.
 
 #### 3. Deployment Flow
-Click in sequence: Continue with GitHub -> Select your forked repository (2fauth-worker) -> Next -> Deploy -> Continue to project -> Settings
-
-<details>
-<summary>Click to view: Detailed deployment steps</summary>
-
 1. Click **Continue with GitHub** and select your forked repository (`2fauth-worker`)
 2. Click **Next** → **Deploy** and wait for the build to complete
 3. After deployment, click **Continue to project** → **Settings**
-4. Add environment variables and secrets in the settings page (see next step)
-5. Build command: `npm run build --prefix frontend`
-6. Deploy command: `npx wrangler deploy`
-
-</details>
+4. Build command: `npm run build --prefix frontend && npx wrangler deploy`
+5. Add environment variables and secrets in the settings page (see next step)
 
 #### D1 Database Setup
 After the first deployment, you must create a D1 database and execute the schema:
-
-<details>
-<summary>Click to view: D1 Database Setup Steps</summary>
 
 1. Go to Cloudflare Dashboard → **Storage & Databases** → **D1 SQL Database** → **Create Database**
 2. Name it `2fauth-db` and click **Create**
@@ -121,27 +100,16 @@ After the first deployment, you must create a D1 database and execute the schema
 6. Set the binding variable name to `DB` and select the `2fauth-db` database you just created
 7. Click **Save and Deploy** to apply the binding
 
-</details>
-
 #### 4. Add the following Variables and Secrets in `Settings`
-  *   `ENCRYPTION_KEY`: A random key with at least 32 characters.
-  *   `JWT_SECRET`: A random JWT secret with at least 32 characters.
-  *   `OAUTH_ALLOWED_USERS`: your_email@example.com
-  *   Login method (at least one required):
-      *   Password login: `AUTH_USERNAME` (username) + `AUTH_PASSWORD` (password)
-      *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
-      *   Other OAuth providers: see below
+*   `ENCRYPTION_KEY`: A random key with at least 32 characters (recommended type: Secret)
+*   `JWT_SECRET`: A random JWT secret with at least 32 characters (recommended type: Secret)
+*   `OAUTH_ALLOWED_USERS`: your_email@example.com (recommended type: Text)
+*   Login method (at least one required):
+    *   Password login: `AUTH_USERNAME` (username) + `AUTH_PASSWORD` (password), recommended type: Secret
+    *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+    *   Other OAuth providers: see below
 
-<details>
-<summary>Click to view: Steps to add Variables and Secrets</summary>
-
-1. Go to Workers & Pages → select your `2fauth-worker` project
-2. Click **Settings** → **Variables and Secrets**
-3. Click **Add**, choose type as **Secret** or **Text**
-4. Add each variable listed above
-5. After adding, click **Save and Deploy** to apply the changes
-
-</details>
+How to add: Go to Workers & Pages → select your `2fauth-worker` project → **Settings** → **Variables and Secrets** → **Add**, choose type as **Secret** or **Text**, add each variable listed above. After adding, click **Save and Deploy** to apply the changes.
 
 ---
 
@@ -215,72 +183,48 @@ Choose this for continuous deployment or more precise database management.
 
 #### 1. Prerequisites
 
-*   Create a D1 database named `2fauth-db` in `Storage & Databases` -> `D1 SQL Database` and record its **Database ID**.
-<details>
-<summary>Click to view: Steps to create D1 SQL Database</summary>
-
-1. Log in to Cloudflare Dashboard
-2. Navigate to **Storage & Databases** → **D1 SQL Database**
-3. Click **Create Database**
-4. Enter database name: `2fauth-db`
-5. Click **Create**, then record the **Database ID**
-
-</details>
+*   Create a D1 database named `2fauth-db` in `Storage & Databases` → `D1 SQL Database` and record its **Database ID**.
+    1. Log in to Cloudflare Dashboard
+    2. Navigate to **Storage & Databases** → **D1 SQL Database**
+    3. Click **Create Database**
+    4. Enter database name: `2fauth-db`
+    5. Click **Create**, then record the **Database ID**
 
 *   Obtain a **Cloudflare API Token** (requires `Edit Cloudflare Workers` permissions).
-<details>
-<summary>Click to view: Steps to obtain Cloudflare Worker Deployment Token</summary>
-
-1. Log in to Cloudflare Dashboard
-2. Go to [API Tokens page](https://dash.cloudflare.com/profile/api-tokens)
-3. Click **Create Token**
-4. Choose the **Edit Cloudflare Workers** template
-5. Configure **Account Resources** and **Zone Resources**
-6. Click **Continue to summary** → **Create Token**
-7. Copy the generated token (shown only once)
-
-</details>
+    1. Log in to Cloudflare Dashboard
+    2. Go to [API Tokens page](https://dash.cloudflare.com/profile/api-tokens)
+    3. Click **Create Token**
+    4. Choose the **Edit Cloudflare Workers** template
+    5. Configure **Account Resources** and **Zone Resources**
+    6. Click **Continue to summary** → **Create Token**
+    7. Copy the generated token (shown only once)
 
 #### 2. Repository Configuration
 1.  **Fork** this repository.
 2.  Create a D1 database named `2fauth-db` and execute `backend/schema.sql` in the D1 console (see [D1 Database Setup](#d1-database-setup) above).
-3.  Go to `Settings` -> `Secrets and variables` -> `Actions`.
+3.  Go to `Settings` → `Secrets and variables` → `Actions`.
 4.  Add the following secrets:
-   *   `CLOUDFLARE_ACCOUNT_ID`: Your CF Account ID.
-   *   `CLOUDFLARE_API_TOKEN`: Your API Token.
-   *   `CLOUDFLARE_D1_DATABASE_ID`: Your D1 Database ID.
-   *   `CLOUDFLARE_D1_DATABASE_NAME`: `2fauth-db`.
-   *   `ENCRYPTION_KEY`: A 32+ character random key.
-   *   `JWT_SECRET`: A 32+ character random JWT secret.
-   *   `OAUTH_ALLOWED_USERS`: your_email@example.com
-   *   Login method (at least one required):
-       *   Password login: `AUTH_USERNAME` + `AUTH_PASSWORD`
-       *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
+    *   `CLOUDFLARE_ACCOUNT_ID`: Your CF Account ID
+    *   `CLOUDFLARE_API_TOKEN`: Your API Token
+    *   `CLOUDFLARE_D1_DATABASE_ID`: Your D1 Database ID
+    *   `CLOUDFLARE_D1_DATABASE_NAME`: `2fauth-db`
+    *   `ENCRYPTION_KEY`: A 32+ character random key
+    *   `JWT_SECRET`: A 32+ character random JWT secret
+    *   `OAUTH_ALLOWED_USERS`: your_email@example.com
+    *   Login method (at least one required):
+        *   Password login: `AUTH_USERNAME` + `AUTH_PASSWORD`
+        *   GitHub OAuth: `OAUTH_GITHUB_CLIENT_ID` + `OAUTH_GITHUB_CLIENT_SECRET` + `OAUTH_GITHUB_REDIRECT_URI`
 
-<details>
-<summary>Click to view: Secrets Configuration Guide</summary>
-
-1. Go to your forked repository page
-2. Click **Settings** → **Secrets and variables** → **Actions**
-3. Click **New repository secret**
-4. Add each Secret listed above (name and value)
-5. After adding, all Secrets will appear in the list
-
-</details>
+    How to add: Go to your forked repository page → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`, add each Secret listed above.
 
 #### 3. Trigger Deployment
 *   Go to the `Actions` page, manually run the `Deploy to Cloudflare Workers` workflow, or push code to the `main` branch.
 
-<details>
-<summary>Click to view: Manual deployment steps</summary>
-
-1. Go to the **Actions** page of your repository
-2. Select **Deploy to Cloudflare Workers** workflow on the left
-3. Click the **Run workflow** button on the right
-4. Select `main` branch and click **Run workflow**
-5. Wait for build and deployment to complete (about 2-3 minutes)
-
-</details>
+    1. Go to the **Actions** page of your repository
+    2. Select **Deploy to Cloudflare Workers** workflow on the left
+    3. Click the **Run workflow** button on the right
+    4. Select `main` branch and click **Run workflow**
+    5. Wait for build and deployment to complete (about 2-3 minutes)
 
 ---
 
@@ -312,23 +256,14 @@ Regardless of the deployment method, these parameters are critical:
 ---
 
 #### How to configure GitHub OAuth Login (Recommended)
-1. Visit GitHub `Settings` -> `Developer Settings` -> `OAuth Apps` -> **New OAuth App**.
-2. **Authorization callback URL** must be: `https://your-domain.com/oauth/callback`.
-3. Fill `Client ID`, `Client Secret` and `OAUTH_GITHUB_REDIRECT_URI` into environment variables.
-
-<details>
-<summary>Click to view: Github OAuth Configuration Steps</summary>
-
 1. Visit GitHub `Settings` → `Developer Settings` → `OAuth Apps` → **New OAuth App**
 2. Fill in the application name (e.g., `2fauth`)
 3. Homepage URL: your domain (e.g., `https://2fa.5as.cn`)
-4. Callback URL: `https://your-domain.com/oauth/callback`
+4. Callback URL must be: `https://your-domain.com/oauth/callback`
 5. Click **Register application**
 6. Record the **Client ID**
 7. Click **Generate a new client secret** and record the **Client Secret**
-8. Fill Client ID, Client Secret, and Redirect URI into environment variables
-
-</details>
+8. Fill `Client ID`, `Client Secret` and `OAUTH_GITHUB_REDIRECT_URI` into environment variables
 
 #### How to configure Telegram Login
 1. Search and add **[@BotFather](https://t.me/BotFather)** on Telegram, following prompts to create a bot.
@@ -341,36 +276,18 @@ Regardless of the deployment method, these parameters are critical:
 5. Fill `OAUTH_TELEGRAM_BOT_TOKEN`, `OAUTH_TELEGRAM_BOT_NAME` into environment variables.
 
 #### How to configure Cloudflare Access Login
-1. Enter **Cloudflare Zero Trust Dashboard** -> **Access** -> **Applications**.
-2. Create a **SaaS** application (Select "SaaS").
-3. Configure **Application**:
-    - **Name**: `Anything, e.g., 2fauth`
-    - **Authentication Protocol**: `OIDC`
-    - **Redirect URL**: `https://your-domain.com/oauth/callback`
-4. Copy and save `Client ID` and `Client Secret`.
-5. Access Policy -> Click create new policy -> Add policy:
-    - **Policy**: `Allow`
-    - **Selector**: `Everyone`
-6. No additional configuration needed, click next through to completion.
-7. Fill `OAUTH_CLOUDFLARE_CLIENT_ID`, `OAUTH_CLOUDFLARE_CLIENT_SECRET`, `OAUTH_CLOUDFLARE_REDIRECT_URI` and `OAUTH_CLOUDFLARE_ORG_DOMAIN` into environment variables.
-
-<details>
-<summary>Click to view: Cloudflare Access OAuth Configuration Steps</summary>
-
 1. Enter **Cloudflare Zero Trust Dashboard** → **Access** → **Applications**
 2. Click **Add an application** → select **SaaS** application
 3. Configure application info:
-   - **Name**: Any name (e.g., `2fauth`)
-   - **Authentication Protocol**: `OIDC`
-   - **Redirect URL**: `https://your-domain.com/oauth/callback`
+    - **Name**: Any name (e.g., `2fauth`)
+    - **Authentication Protocol**: `OIDC`
+    - **Redirect URL**: `https://your-domain.com/oauth/callback`
 4. Copy and save **Client ID** and **Client Secret**
 5. Access Policy → Click **Create new policy** → Add policy:
-   - **Policy**: `Allow`
-   - **Selector**: `Everyone`
+    - **Policy**: `Allow`
+    - **Selector**: `Everyone`
 6. No additional configuration needed, click next through to completion
 7. Fill `OAUTH_CLOUDFLARE_CLIENT_ID`, `OAUTH_CLOUDFLARE_CLIENT_SECRET`, `OAUTH_CLOUDFLARE_REDIRECT_URI` and `OAUTH_CLOUDFLARE_ORG_DOMAIN` into environment variables
-
-</details>
 
 ## 🔓 Offline Recovery
 

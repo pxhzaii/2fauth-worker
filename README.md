@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '7d5d6f21-9e8a-40e2-aa9c-77e4e76010e8'
-  PropagateID: '7d5d6f21-9e8a-40e2-aa9c-77e4e76010e8'
-  ReservedCode1: '2abee1df-b588-4755-8d83-23de6bb0abe4'
-  ReservedCode2: '2abee1df-b588-4755-8d83-23de6bb0abe4'
+  ProduceID: '7a4b7fd0-1fa9-4ed4-9e31-43d1ddf8749d'
+  PropagateID: '7a4b7fd0-1fa9-4ed4-9e31-43d1ddf8749d'
+  ReservedCode1: 'e9a54196-0858-4504-9e55-3bde3ed8f14f'
+  ReservedCode2: 'e9a54196-0858-4504-9e55-3bde3ed8f14f'
 ---
 
 # 2FAuth Worker
@@ -100,15 +100,15 @@ AIGC:
 
 #### 4. 在`设置`添加如下变量和密钥
 
-> ⚠️ **安全要求**：除 `OAUTH_ALLOWED_USERS` 外，其余变量**必须选择「密钥」(Secret) 类型**，切勿使用「文本」(Text)，否则密码和密钥将在后台明文可见！
+> ⚠️ **注意**：在 Cloudflare 后台对应的菜单叫「**变量和密钥**」（不是「变量和机密」），请确认进入的是正确的设置页面。
 
-| 变量名 | 说明 | 必须类型 |
+| 变量名 | 说明 | 建议类型 |
 | :--- | :--- | :--- |
-| `ENCRYPTION_KEY` | 32位以上随机密钥 | **密钥** |
-| `JWT_SECRET` | 32位以上随机JWT密钥 | **密钥** |
+| `ENCRYPTION_KEY` | 32位以上随机密钥 | 密钥 |
+| `JWT_SECRET` | 32位以上随机JWT密钥 | 密钥 |
 | `OAUTH_ALLOWED_USERS` | 你的邮箱@example.com | 文本 |
-| `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） | **密钥** |
-| `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） | **密钥** |
+| `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） | 密钥 |
+| `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） | 密钥 |
 
 > 密码登录和 OAuth 可同时启用，至少选一种登录方式。其他 OAuth 平台变量见下方说明。
 

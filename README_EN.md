@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '99b893af-c1d7-40d8-a295-d26776101a00'
-  PropagateID: '99b893af-c1d7-40d8-a295-d26776101a00'
-  ReservedCode1: '216b518a-17ce-4513-8f07-33b99912d0cf'
-  ReservedCode2: '216b518a-17ce-4513-8f07-33b99912d0cf'
+  ProduceID: 'e23051f1-7a0f-49bf-967a-5c3f2f90b281'
+  PropagateID: 'e23051f1-7a0f-49bf-967a-5c3f2f90b281'
+  ReservedCode1: '8888a3c7-39cd-4e58-9f91-e0293b8639cf'
+  ReservedCode2: '8888a3c7-39cd-4e58-9f91-e0293b8639cf'
 ---
 
 # 2FAuth Worker
@@ -102,15 +102,15 @@ After the first deployment, you must create a D1 database and execute the schema
 
 #### 4. Add the following Variables and Secrets in `Settings`
 
-> ⚠️ **Security Requirement**: Except for `OAUTH_ALLOWED_USERS`, all variables below **MUST be set as "Secret" type**. Do NOT use "Text" type, otherwise your passwords and keys will be visible in plain text in the dashboard!
+> ⚠️ **Note**: In the Cloudflare dashboard, this menu is called "**Variables and Secrets**" (not "Variables and 机密"). Make sure you are on the correct settings page.
 
-| Variable | Description | Required Type |
+| Variable | Description | Recommended Type |
 | :--- | :--- | :--- |
-| `ENCRYPTION_KEY` | A random key with at least 32 characters | **Secret** |
-| `JWT_SECRET` | A random JWT secret with at least 32 characters | **Secret** |
+| `ENCRYPTION_KEY` | A random key with at least 32 characters | Secret |
+| `JWT_SECRET` | A random JWT secret with at least 32 characters | Secret |
 | `OAUTH_ALLOWED_USERS` | your_email@example.com | Text |
-| `AUTH_USERNAME` | Password login username (used with `AUTH_PASSWORD`) | **Secret** |
-| `AUTH_PASSWORD` | Password login password (used with `AUTH_USERNAME`) | **Secret** |
+| `AUTH_USERNAME` | Password login username (used with `AUTH_PASSWORD`) | Secret |
+| `AUTH_PASSWORD` | Password login password (used with `AUTH_USERNAME`) | Secret |
 
 > Password login and OAuth can be enabled simultaneously. At least one login method is required. Other OAuth provider variables see below.
 

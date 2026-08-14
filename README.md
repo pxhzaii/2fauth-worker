@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: '7a4b7fd0-1fa9-4ed4-9e31-43d1ddf8749d'
-  PropagateID: '7a4b7fd0-1fa9-4ed4-9e31-43d1ddf8749d'
-  ReservedCode1: 'e9a54196-0858-4504-9e55-3bde3ed8f14f'
-  ReservedCode2: 'e9a54196-0858-4504-9e55-3bde3ed8f14f'
+  ProduceID: '2d1b9ae6-6c84-4c52-98ae-2dd5128499b9'
+  PropagateID: '2d1b9ae6-6c84-4c52-98ae-2dd5128499b9'
+  ReservedCode1: '499ae21e-cc05-496a-b6ca-42a8e6646f02'
+  ReservedCode2: '499ae21e-cc05-496a-b6ca-42a8e6646f02'
 ---
 
 # 2FAuth Worker
@@ -100,7 +100,7 @@ AIGC:
 
 #### 4. 在`设置`添加如下变量和密钥
 
-> ⚠️ **注意**：在 Cloudflare 后台对应的菜单叫「**变量和密钥**」（不是「变量和机密」），请确认进入的是正确的设置页面。
+> ⚠️ **注意**：在 Cloudflare 后台对应的菜单叫<span style="color:red;font-weight:bold">「变量和密钥」</span>（不是<span style="color:red;font-weight:bold">「变量和机密」</span>），请确认进入的是正确的设置页面。
 
 | 变量名 | 说明 | 建议类型 |
 | :--- | :--- | :--- |

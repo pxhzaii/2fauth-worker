@@ -3,10 +3,10 @@ AIGC:
   ContentProducer: '001191110102MAD55U9H0F10002'
   ContentPropagator: '001191110102MAD55U9H0F10002'
   Label: '1'
-  ProduceID: 'e23051f1-7a0f-49bf-967a-5c3f2f90b281'
-  PropagateID: 'e23051f1-7a0f-49bf-967a-5c3f2f90b281'
-  ReservedCode1: '8888a3c7-39cd-4e58-9f91-e0293b8639cf'
-  ReservedCode2: '8888a3c7-39cd-4e58-9f91-e0293b8639cf'
+  ProduceID: 'd7ed1d98-adba-42c0-8cbf-01b4e3941fd1'
+  PropagateID: 'd7ed1d98-adba-42c0-8cbf-01b4e3941fd1'
+  ReservedCode1: 'a48e49dd-0442-4e60-9bfc-aa9484777ddf'
+  ReservedCode2: 'a48e49dd-0442-4e60-9bfc-aa9484777ddf'
 ---
 
 # 2FAuth Worker
@@ -102,7 +102,7 @@ After the first deployment, you must create a D1 database and execute the schema
 
 #### 4. Add the following Variables and Secrets in `Settings`
 
-> ⚠️ **Note**: In the Cloudflare dashboard, this menu is called "**Variables and Secrets**" (not "Variables and 机密"). Make sure you are on the correct settings page.
+> ⚠️ **Note**: In the Cloudflare dashboard, this menu is called <span style="color:red;font-weight:bold">"Variables and Secrets"</span> (not "Variables and 机密"). Make sure you are on the correct settings page.
 
 | Variable | Description | Recommended Type |
 | :--- | :--- | :--- |

@@ -29,7 +29,6 @@
 *   支持 WebDAV、S3 兼容存储、Telegram 机器人、Google Drive、OneDrive、百度网盘、Dropbox、Email 邮件等多种渠道自动备份。即使手机丢了、系统重装了，甚至 Cloudflare 账号没了，你也能通过备份瞬间找回所有账号。
 
 <details>
-<summary>点击查看：同类型产品对比</summary>
 
 | 功能特性 | **2FAuth Worker** (本项目) | Google / MS Auth | Authy | 2FAS / Aegis | 1Password / Bitwarden |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -89,7 +88,7 @@
 | :--- | :--- | :--- |
 | `ENCRYPTION_KEY` | 32位以上随机密钥 | 密钥 |
 | `JWT_SECRET` | 32位以上随机JWT密钥 | 密钥 |
-| `OAUTH_ALLOWED_USERS` | 你的邮箱@example.com | 文本 |
+| `OAUTH_ALLOWED_USERS` | 白名单 邮箱/用户名 | 文本 |
 | `AUTH_USERNAME` | 密码登录用户名（与 `AUTH_PASSWORD` 配合） | 密钥 |
 | `AUTH_PASSWORD` | 密码登录密码（与 `AUTH_USERNAME` 配合） | 密钥 |
 

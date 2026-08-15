@@ -1,13 +1,3 @@
----
-AIGC:
-  ContentProducer: '001191110102MAD55U9H0F10002'
-  ContentPropagator: '001191110102MAD55U9H0F10002'
-  Label: '1'
-  ProduceID: '99aaf9f4-1d6b-40ff-8428-7c1618e0ad70'
-  PropagateID: '99aaf9f4-1d6b-40ff-8428-7c1618e0ad70'
-  ReservedCode1: 'e78b0f81-793c-404e-8500-73c7991aa38e'
-  ReservedCode2: 'e78b0f81-793c-404e-8500-73c7991aa38e'
----
 
 # 2FAuth Worker
 
@@ -16,16 +6,9 @@ AIGC:
 **支持 Cloudflare Serverless 与 Docker 私有化部署的高安全、轻量级二步验证 (2FA/TOTP) 管理系统**
 
 
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=flat&logo=cloudflare)](https://workers.cloudflare.com/)
-[![Docker](https://img.shields.io/badge/Docker-Supported-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/r/nap0o/2fauth-worker)
-[![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-181717?style=flat&logo=github)](https://github.com/pxhzaii/2fauth-worker/actions)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-red.svg)](https://www.gnu.org/licenses/agpl-3.0)
+源码基于[2FAuth Worker](https://github.com/nodeauth/2fauth-worker)修改
 
-[**点击此处查看 Demo 演示**](https://2fa.nezha.pp.ua)
 
-> 💡 **提示**：演示站开启了全员登录模式，数据可随意修改、删除。正式部署请务必设置白名单。
-
----
 
 ## 🌟 为什么选择 2FAuth Worker？
 
